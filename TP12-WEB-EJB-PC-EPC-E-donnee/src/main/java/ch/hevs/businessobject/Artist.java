@@ -83,4 +83,10 @@ public class Artist {
 		song.setArtist(this);
 		this.songs.add(song);
 	}
+	
+	@Override
+	public String toString() {
+		String result = id + "-" + stageName;
+		return result;
+	}
 }

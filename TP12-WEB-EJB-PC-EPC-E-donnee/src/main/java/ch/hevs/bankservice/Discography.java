@@ -15,12 +15,12 @@ public interface Discography {
 	
 	Artist getArtist(Long id);
 	
-	List<Album> getAlbums(Long artistId);
+	List<Album> getAlbums(String artistName);
 	
 	Album getAlbum(long id);
 	
 	List<Song> getSongsFromAlbum(Long albumId);
-	List<Song> getSongsFromArtist(Long artistId);
+	List<Song> getSongsFromArtist(String artistName);
 	
 	Song getSong(long id);
 	

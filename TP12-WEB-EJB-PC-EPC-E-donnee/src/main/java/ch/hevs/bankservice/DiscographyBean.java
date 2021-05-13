@@ -29,8 +29,8 @@ public class DiscographyBean implements Discography{
 	}
 
 	@Override
-	public List<Album> getAlbums(Long artistId) {
-		return em.createQuery("FROM Album a WHERE a.artist.id=:artistId").setParameter("artistId", artistId).getResultList();
+	public List<Album> getAlbums(String artistName) {
+		return em.createQuery("FROM Album a WHERE a.artist.stageName=:artistName").setParameter("artistName", artistName).getResultList();
 	}
 
 	@Override
@@ -44,8 +44,8 @@ public class DiscographyBean implements Discography{
 	}
 
 	@Override
-	public List<Song> getSongsFromArtist(Long artistId) {
-		return em.createQuery("FROM Song s WHERE s.artist.id=:artistId").setParameter("artistId", artistId).getResultList();
+	public List<Song> getSongsFromArtist(String artistName) {
+		return em.createQuery("FROM Song s WHERE s.artist.stageName=:artistName").setParameter("artistName", artistName).getResultList();
 	}
 
 	@Override

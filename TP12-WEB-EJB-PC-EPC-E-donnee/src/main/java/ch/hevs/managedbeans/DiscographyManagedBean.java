@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.event.ValueChangeEvent;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
@@ -20,7 +21,11 @@ public class DiscographyManagedBean {
 	private List<Artist> artists;
 	private List<String> artistNames;
 	private List<Album> albums;
+	private List<String> albumNames;
 	private List<Song> songs;
+	private List<String> songNames;
+	
+	private String sourceArtistName;
 	
 	private Discography disco;
 	
@@ -75,6 +80,31 @@ public class DiscographyManagedBean {
 	public void setSongs(List<Song> songs) {
 		this.songs = songs;
 	}
+
+
+	public String getSourceArtistName() {
+		return sourceArtistName;
+	}
+	public void setSourceArtistName(String sourceArtistName) {
+		this.sourceArtistName = sourceArtistName;
+	}
+	
+	public void updateSourceArtist(ValueChangeEvent event) {
+    	this.sourceArtistName = (String)event.getNewValue();
+    	
+	    List<Album> Album = disco.getAlbums(this.sourceArtistName);
+	    this.albumNames = new ArrayList<String>();
+		for (Album album : albums) {
+			this.albumNames.add(album.getName());
+		}
+		
+		List<Song> songs = disco.getSongsFromArtist(this.sourceArtistName);
+	    this.songNames = new ArrayList<String>();
+		for (Song song : songs) {
+			this.songNames.add(song.getName());
+		}
+    }
+	
 	 
 	 
 

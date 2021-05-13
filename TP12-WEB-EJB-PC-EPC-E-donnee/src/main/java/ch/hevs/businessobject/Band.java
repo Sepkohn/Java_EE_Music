@@ -3,6 +3,8 @@ package ch.hevs.businessobject;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Entity;
+
 public class Band extends Artist{
 
 	private List<BandMember> members;

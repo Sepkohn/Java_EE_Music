@@ -1,5 +1,8 @@
 package ch.hevs.businessobject;
 
+import javax.persistence.Entity;
+
+
 public class Singer extends Artist{
 	
 	

@@ -3,6 +3,8 @@ package ch.hevs.businessobject;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Entity;
+@Entity
 public class Album extends Music{
 
 	private List<Song> songs;

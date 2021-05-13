@@ -3,14 +3,26 @@ package ch.hevs.businessobject;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+@Entity
 public class Artist {
-
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	private long id;
+	
 	private String stageName;
 	private List<Album> albums;
 	private List<Song> songs;
 	private String origin;
 	private String genre;
 	
+	
+	public Artist() {
+	
+	}
 	public String getStageName() {
 		return stageName;
 	}

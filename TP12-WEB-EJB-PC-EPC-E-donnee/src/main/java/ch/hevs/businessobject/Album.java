@@ -4,9 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
+
 @Entity
 public class Album extends Music{
-
+	
+	@ManyToMany(mappedBy = "albums")
 	private List<Song> songs;
 	private String label;
 	
@@ -23,14 +26,20 @@ public class Album extends Music{
 		this.label = label;
 	}
 	
-	public Album(String name, int duration, int year, Artist artist,String label) {
-		super(name, duration, year, artist);
+	public Album(String name, int duration, int year, String label) {
+		super(name, duration, year);
 		// TODO Auto-generated constructor stub
 		this.label = label;
 		this.songs = new ArrayList<Song>();
 	}
-
 	
+	public Album() {
+		
+	}
 	
-	
+	public void addSong(Song song) {
+		this.songs.add(song);
+		
+	}
+		
 }

@@ -2,7 +2,7 @@ package ch.hevs.businessobject;
 
 import javax.persistence.Entity;
 
-
+@Entity
 public class Singer extends Artist{
 	
 	
@@ -15,6 +15,7 @@ public class Singer extends Artist{
 	public void setRealName(String realName) {
 		this.realName = realName;
 	}
+	
 	public String getRealFirstname() {
 		return realFirstname;
 	}
@@ -22,9 +23,12 @@ public class Singer extends Artist{
 		this.realFirstname = realFirstname;
 	}
 	
-	public Singer(String stageName, String origin, String genre) {
-		super(stageName, origin, genre);
+	public Singer(String stageName, String genre) {
+		super(stageName, genre);
 		// TODO Auto-generated constructor stub
+	}
+	public Singer() {
+		
 	}
 
 }

@@ -11,14 +11,16 @@
         <h:outputLabel value="Welcome to the Music Discography"></h:outputLabel>
         <br></br>
         <h:form>
-        	<h:outputLabel value="Transfer Information:"></h:outputLabel>
+        	<h:outputLabel value="Music Information:"></h:outputLabel>
         	<br></br>
         	<h:panelGrid columns="5">
         		<h:outputText value="Select an Artist: "></h:outputText>
-        		<h:outputText value="Artist: "></h:outputText>
 	        	<h:selectOneMenu value="#{DiscographyManagedBean.artists}" valueChangeListener="#{DiscographyManagedBean.updateSourceArtist}" onchange="submit()">
 	        		<f:selectItems value="#{DiscographyManagedBean.artistNames}"/>
 	        	</h:selectOneMenu>
+	      
+	        	 
+	     
         	</h:panelGrid>
      		<h:commandButton value="validate" action="#{transferBean.performTransfer}"></h:commandButton>
         </h:form>

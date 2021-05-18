@@ -25,7 +25,6 @@ public class Artist {
 	
 	@Embedded
 	private Address address;
-	
 	private String genre;
 	
 	
@@ -66,6 +65,7 @@ public class Artist {
 	public void setGenre(String genre) {
 		this.genre = genre;
 	}
+
 	public Artist(String stageName, String genre) {
 		super();
 		this.stageName = stageName;

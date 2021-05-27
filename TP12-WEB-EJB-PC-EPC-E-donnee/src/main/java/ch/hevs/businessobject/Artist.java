@@ -18,7 +18,7 @@ import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.DiscriminatorOptions;
 @Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+//@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class Artist {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)

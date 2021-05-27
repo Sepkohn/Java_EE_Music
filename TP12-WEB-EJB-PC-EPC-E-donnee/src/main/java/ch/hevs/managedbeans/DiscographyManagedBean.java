@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.ejb.Stateful;
 import javax.faces.event.ValueChangeEvent;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -15,10 +16,10 @@ import ch.hevs.businessobject.Album;
 import ch.hevs.businessobject.Artist;
 import ch.hevs.businessobject.Song;
 
+@Stateful
 public class DiscographyManagedBean {
 	
 	private List<Artist> artists;
-	private String artistName; //test
 	private List<String> artistNames;
 	private List<Album> albums;
 	private List<String> albumNames;
@@ -26,8 +27,10 @@ public class DiscographyManagedBean {
 	private List<String> songNames;
 	
 	private String sourceArtistName;
+	private String sourceAlbumName;
 	
 	private Discography disco;
+
 	
 	
 	 @PostConstruct
@@ -58,16 +61,27 @@ public class DiscographyManagedBean {
 	public void setArtists(List<Artist> artists) {
 		this.artists = artists;
 	}
-	
-	public String getArtistName() {
-		return artistName;
-	}
 
 	public List<String> getArtistNames() {
 		return artistNames;
 	}
 	public void setArtistNames(List<String> artistNames) {
 		this.artistNames = artistNames;
+	}
+	
+	public List<String> getAlbumNames() {
+		return albumNames;
+	}
+	public void setAlbumNames(List<String> albumNames) {
+		this.albumNames = albumNames;
+	}
+
+
+	public List<String> getSongNames() {
+		return songNames;
+	}
+	public void setSongNames(List<String> songNames) {
+		this.songNames = songNames;
 	}
 
 
@@ -85,8 +99,7 @@ public class DiscographyManagedBean {
 	public void setSongs(List<Song> songs) {
 		this.songs = songs;
 	}
-
-
+	
 	public String getSourceArtistName() {
 		return sourceArtistName;
 	}
@@ -97,20 +110,26 @@ public class DiscographyManagedBean {
 	public void updateSourceArtist(ValueChangeEvent event) {
     	this.sourceArtistName = (String)event.getNewValue();
     	
-	    disco.getAlbums(this.sourceArtistName);
+    	albums = disco.getAlbums(this.sourceArtistName);
 	    this.albumNames = new ArrayList<String>();
 		for (Album album : albums) {
 			this.albumNames.add(album.getName());
 		}
-		
-		List<Song> songs = disco.getSongsFromArtist(this.sourceArtistName);
-	    this.songNames = new ArrayList<String>();
-		for (Song song : songs) {
-			this.songNames.add(song.getName());
-		}
     }
 	
-	 
+	public void updateSourceAlbum(ValueChangeEvent event) {
+    	this.sourceAlbumName = (String)event.getNewValue();
+    	
+    	songs = disco.getSongsFromAlbum(this.sourceAlbumName);
+	    /*this.songNames = new ArrayList<String>();
+		for (Song song : songs) {
+			this.songNames.add(song.getName());
+		}*/
+    }
+	
+	public String toAlbums() {	
+		return "welcomeAlbum";
+	}
 	 
 
 }

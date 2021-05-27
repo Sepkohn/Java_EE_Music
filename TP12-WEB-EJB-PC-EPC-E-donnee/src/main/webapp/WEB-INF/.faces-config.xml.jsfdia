@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PROCESS model-entity="JSFProcess">
+ <PROCESS-ITEM NAME="rules:#welcomeArtist.xhtml"
+  PATH="/welcomeArtist.xhtml" SHAPE="55,106,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#welcomeArtist.xhtml:0" NAME="item"
+   PATH="/welcomeArtist.xhtml" model-entity="JSFProcessItem"/>
+ </PROCESS-ITEM>
  <PROCESS-ITEM NAME="rules:#welcomeBank.xhtml" PATH="/welcomeBank.xhtml"
   SHAPE="184,88,50,41" model-entity="JSFProcessGroup">
   <PROCESS-ITEM ID="rules:#welcomeBank.xhtml:0" NAME="item"
@@ -22,13 +27,4 @@
  </PROCESS-ITEM>
  <PROCESS-ITEM NAME="rules:#showTransferResult.xhtml"
   PATH="/showTransferResult.xhtml" SHAPE="448,17,0,0" model-entity="JSFProcessGroup"/>
- <PROCESS-ITEM NAME="rules:#welcomeArtist.xhtml"
-  PATH="/welcomeArtist.xhtml" SHAPE="55,106,0,0" model-entity="JSFProcessGroup">
-  <PROCESS-ITEM ID="rules:#welcomeArtist.xhtml:0" NAME="item"
-   PATH="/welcomeArtist.xhtml" model-entity="JSFProcessItem">
-   <PROCESS-ITEM-OUTPUT ID="welcomeBank::#welcomeBank.xhtml"
-    NAME="output" PATH="/welcomeBank.xhtml"
-    TARGET="rules:#welcomeBank.xhtml" TITLE="welcomeBank" model-entity="JSFProcessItemOutput"/>
-  </PROCESS-ITEM>
- </PROCESS-ITEM>
 </PROCESS>

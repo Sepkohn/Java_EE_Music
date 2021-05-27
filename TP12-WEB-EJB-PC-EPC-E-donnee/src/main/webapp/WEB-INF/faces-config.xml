@@ -9,10 +9,6 @@
  
   <navigation-rule>
   <from-view-id>/welcomeArtist.xhtml</from-view-id>
-  <navigation-case>
-   <from-outcome>welcomeBank</from-outcome>
-   <to-view-id>/welcomeBank.xhtml</to-view-id>
-  </navigation-case>
  </navigation-rule>
  
  <navigation-rule>

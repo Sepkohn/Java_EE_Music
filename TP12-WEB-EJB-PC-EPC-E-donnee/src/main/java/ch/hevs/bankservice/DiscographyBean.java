@@ -63,13 +63,6 @@ public class DiscographyBean implements Discography{
 		Album copyAlbum = em.merge(album);
 		artist.addAlbum(album);
 	}
-
-	@Override
-	public void addSongToArtist(Song song, Artist artist) {
-		Artist copyArtist = em.merge(artist);
-		Song copySong = em.merge(song);
-		artist.addSong(song);	
-	}
 	
 	@Override
 	public void addSongToAlbum(Song song, Album album) {

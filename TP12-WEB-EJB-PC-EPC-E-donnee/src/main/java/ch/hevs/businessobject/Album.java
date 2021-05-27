@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Album extends Music{
@@ -12,6 +13,9 @@ public class Album extends Music{
 	@ManyToMany(mappedBy = "albums")
 	private List<Song> songs;
 	private String label;
+	
+	@ManyToOne
+	private Artist artist;
 	
 	public List<Song> getSongs() {
 		return songs;
@@ -24,6 +28,13 @@ public class Album extends Music{
 	}
 	public void setLabel(String label) {
 		this.label = label;
+	}
+	
+	public Artist getArtist() {
+		return artist;
+	}
+	public void setArtist(Artist artist) {
+		this.artist = artist;
 	}
 	
 	public Album(String name, int duration, int year, String label) {

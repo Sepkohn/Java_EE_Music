@@ -15,8 +15,6 @@ public abstract class Music {
 	private String name;
 	private int duration;
 	private int year;
-	@ManyToOne
-	private Artist artist;
 	
 	public Long getId() {
 		return id;
@@ -41,13 +39,6 @@ public abstract class Music {
 	}
 	public void setYear(int year) {
 		this.year = year;
-	}
-	
-	public Artist getArtist() {
-		return artist;
-	}
-	public void setArtist(Artist artist) {
-		this.artist = artist;
 	}
 	
 	public Music() {

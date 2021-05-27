@@ -18,7 +18,6 @@ import ch.hevs.businessobject.Song;
 public class DiscographyManagedBean {
 	
 	private List<Artist> artists;
-	private Artist artiste; //test
 	private String artistName; //test
 	private List<String> artistNames;
 	private List<Album> albums;
@@ -37,12 +36,11 @@ public class DiscographyManagedBean {
 	    	// use JNDI to inject reference to bank EJB
 	    	InitialContext ctx = new InitialContext();
 			disco = (Discography) ctx.lookup("java:global/TP12-WEB-EJB-PC-EPC-E-0.0.1-SNAPSHOT/DiscographyBean!ch.hevs.bankservice.Discography");    	
-				
+			
+			
 	    	// get clients
 			this.artists = disco.getArtists();
 			
-			long test = 1;
-			this.artiste = disco.getArtist(test);
 			this.artistNames = new ArrayList<String>();
 			for (Artist artist : this.artists) {
 				this.artistNames.add(artist.getStageName());
@@ -99,7 +97,7 @@ public class DiscographyManagedBean {
 	public void updateSourceArtist(ValueChangeEvent event) {
     	this.sourceArtistName = (String)event.getNewValue();
     	
-	    List<Album> Album = disco.getAlbums(this.sourceArtistName);
+	    disco.getAlbums(this.sourceArtistName);
 	    this.albumNames = new ArrayList<String>();
 		for (Album album : albums) {
 			this.albumNames.add(album.getName());

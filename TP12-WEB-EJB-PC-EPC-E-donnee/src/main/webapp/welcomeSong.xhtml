@@ -14,16 +14,11 @@
         	<h:outputLabel value="Music Information:"></h:outputLabel>
         	<br></br>
         	<h:panelGrid columns="5">
-        		<h:outputText value="Select an Artist: "></h:outputText>
-	        	<h:selectOneMenu value="#{DiscographyManagedBean.artists}" valueChangeListener="#{DiscographyManagedBean.updateSourceArtist}" onchange="submit()">
-	        		<f:selectItems value="#{DiscographyManagedBean.artistNames}"/>
+        		<h:outputText value="Select a Song: "></h:outputText>
+	        	<h:selectOneMenu value="#{DiscographyManagedBean.albums}" valueChangeListener="#{DiscographyManagedBean.updateSourceAlbum}" onchange="submit()">
+	        		<f:selectItems value="#{DiscographyManagedBean.albumNames}"/>
 	        	</h:selectOneMenu>
         	</h:panelGrid>
-       </h:form>
-        <h:form>
-		        <h:commandLink action="welcomeAlbum">
-		         <h:outputText value="Show Albums" />
-		        </h:commandLink>
         </h:form>
     </ui:define>
 </ui:composition>

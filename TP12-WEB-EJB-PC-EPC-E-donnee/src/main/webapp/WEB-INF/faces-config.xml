@@ -7,8 +7,18 @@
   <managed-bean-scope>session</managed-bean-scope>
  </managed-bean>
  
-  <navigation-rule>
-  <from-view-id>/welcomeArtist.xhtml</from-view-id>
+ <navigation-rule>
+  <display-name>welcomeAlbum.xhtml</display-name>
+  <from-view-id>/welcomeAlbum.xhtml</from-view-id>
+  <navigation-case>
+   <from-outcome>welcomeSong</from-outcome>
+   <to-view-id>/welcomeSong.xhtml</to-view-id>
+  </navigation-case>
+ </navigation-rule>
+ 
+ <navigation-rule>
+ <display-name>welcomeSong.xhtml</display-name>
+  <from-view-id>/welcomeSong.xhtml</from-view-id>
  </navigation-rule>
  
  <navigation-rule>
@@ -29,6 +39,13 @@
   </navigation-case>
  </navigation-rule>
  
-
+ <navigation-rule>
+  <from-view-id>/welcomeArtist.xhtml</from-view-id>
+  <navigation-case>
+   <from-outcome>welcomeAlbum</from-outcome>
+   <to-view-id>/welcomeAlbum.xhtml</to-view-id>
+  </navigation-case>
+ </navigation-rule>
+ 
  <application/>
 </faces-config>

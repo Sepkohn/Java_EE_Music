@@ -19,8 +19,7 @@ public interface Discography {
 	
 	Album getAlbum(long id);
 	
-	List<Song> getSongsFromAlbum(Long albumId);
-	List<Song> getSongsFromArtist(String artistName);
+	List<Song> getSongsFromAlbum(String albumName);
 	
 	Song getSong(long id);
 	

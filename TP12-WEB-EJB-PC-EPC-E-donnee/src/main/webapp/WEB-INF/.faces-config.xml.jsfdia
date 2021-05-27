@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PROCESS model-entity="JSFProcess">
  <PROCESS-ITEM NAME="rules:#welcomeArtist.xhtml"
-  PATH="/welcomeArtist.xhtml" SHAPE="55,106,0,0" model-entity="JSFProcessGroup">
+  PATH="/welcomeArtist.xhtml" SHAPE="48,192,50,41" model-entity="JSFProcessGroup">
   <PROCESS-ITEM ID="rules:#welcomeArtist.xhtml:0" NAME="item"
-   PATH="/welcomeArtist.xhtml" model-entity="JSFProcessItem"/>
+   PATH="/welcomeArtist.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="welcomeAlbum::#welcomeAlbum.xhtml"
+    NAME="output" PATH="/welcomeAlbum.xhtml"
+    TARGET="rules:#welcomeAlbum.xhtml" TITLE="welcomeAlbum" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
  </PROCESS-ITEM>
  <PROCESS-ITEM NAME="rules:#welcomeBank.xhtml" PATH="/welcomeBank.xhtml"
   SHAPE="184,88,50,41" model-entity="JSFProcessGroup">
@@ -27,4 +31,18 @@
  </PROCESS-ITEM>
  <PROCESS-ITEM NAME="rules:#showTransferResult.xhtml"
   PATH="/showTransferResult.xhtml" SHAPE="448,17,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#welcomeAlbum.xhtml"
+  PATH="/welcomeAlbum.xhtml" SHAPE="232,280,50,41" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#welcomeAlbum.xhtml:0" NAME="item"
+   PATH="/welcomeAlbum.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="welcomeSong::#welcomeSong.xhtml"
+    NAME="output" PATH="/welcomeSong.xhtml"
+    TARGET="rules:#welcomeSong.xhtml" TITLE="welcomeSong" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#welcomeSong.xhtml" PATH="/welcomeSong.xhtml"
+  SHAPE="448,241,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#welcomeSong.xhtml:0" NAME="item"
+   PATH="/welcomeSong.xhtml" model-entity="JSFProcessItem"/>
+ </PROCESS-ITEM>
 </PROCESS>

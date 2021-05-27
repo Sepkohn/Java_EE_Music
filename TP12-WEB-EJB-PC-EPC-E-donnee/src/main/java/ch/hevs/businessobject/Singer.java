@@ -24,7 +24,7 @@ public class Singer extends Artist{
 	}
 	
 	public Singer(String stageName, String genre) {
-		super(stageName, genre);
+		//super(stageName, genre);
 		// TODO Auto-generated constructor stub
 	}
 	public Singer() {

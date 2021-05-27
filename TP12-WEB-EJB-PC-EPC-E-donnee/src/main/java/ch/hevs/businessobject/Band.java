@@ -14,7 +14,7 @@ public class Band extends Artist{
 	private List<BandMember> members;
 	
 	public Band(String stageName, String genre) {
-		super(stageName, genre);
+		//super(stageName, genre);
 		// TODO Auto-generated constructor stub
 		this.members = new ArrayList<BandMember>();
 	}

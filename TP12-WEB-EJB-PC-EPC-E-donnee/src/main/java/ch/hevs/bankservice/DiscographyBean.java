@@ -8,7 +8,6 @@ import javax.persistence.PersistenceContext;
 
 import ch.hevs.businessobject.Album;
 import ch.hevs.businessobject.Artist;
-import ch.hevs.businessobject.Client;
 import ch.hevs.businessobject.Song;
 
 @Stateless
@@ -19,7 +18,7 @@ public class DiscographyBean implements Discography{
 
 	
 	public List<Artist> getArtists() {
-		
+	
 		return em.createQuery("FROM Artist").getResultList();
 	}
 
@@ -40,7 +39,7 @@ public class DiscographyBean implements Discography{
 
 	@Override
 	public List<Song> getSongsFromAlbum(Long albumId) {
-		return em.createQuery("FROM Song s ").getResultList();
+		return em.createQuery("FROM Song s  ").getResultList(); //pas fini
 	}
 
 	@Override

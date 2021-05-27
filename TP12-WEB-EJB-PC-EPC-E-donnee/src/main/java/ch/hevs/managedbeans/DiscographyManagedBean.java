@@ -13,12 +13,13 @@ import ch.hevs.bankservice.Discography;
 import ch.hevs.businessobject.Account;
 import ch.hevs.businessobject.Album;
 import ch.hevs.businessobject.Artist;
-import ch.hevs.businessobject.Client;
 import ch.hevs.businessobject.Song;
 
 public class DiscographyManagedBean {
 	
 	private List<Artist> artists;
+	private Artist artiste; //test
+	private String artistName; //test
 	private List<String> artistNames;
 	private List<Album> albums;
 	private List<String> albumNames;
@@ -39,6 +40,9 @@ public class DiscographyManagedBean {
 				
 	    	// get clients
 			this.artists = disco.getArtists();
+			
+			long test = 1;
+			this.artiste = disco.getArtist(test);
 			this.artistNames = new ArrayList<String>();
 			for (Artist artist : this.artists) {
 				this.artistNames.add(artist.getStageName());
@@ -56,7 +60,10 @@ public class DiscographyManagedBean {
 	public void setArtists(List<Artist> artists) {
 		this.artists = artists;
 	}
-
+	
+	public String getArtistName() {
+		return artistName;
+	}
 
 	public List<String> getArtistNames() {
 		return artistNames;

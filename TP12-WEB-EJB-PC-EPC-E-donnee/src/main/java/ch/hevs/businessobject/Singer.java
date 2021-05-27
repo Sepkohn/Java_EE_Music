@@ -1,8 +1,12 @@
 package ch.hevs.businessobject;
 
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
+import javax.persistence.Inheritance;
 
 @Entity
+@Inheritance
 public class Singer extends Artist{
 	
 	

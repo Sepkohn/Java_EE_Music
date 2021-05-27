@@ -26,8 +26,7 @@ public interface Discography {
 	
 	void addArtist(Artist artist);
 	void addAlbum(Album album, Artist artist);
-	public void addSongToArtist(Song song, Artist artist);
-	public void addSongToAlbum(Song song, Album album);
+	void addSongToAlbum(Song song, Album album);
 	
 	
 }

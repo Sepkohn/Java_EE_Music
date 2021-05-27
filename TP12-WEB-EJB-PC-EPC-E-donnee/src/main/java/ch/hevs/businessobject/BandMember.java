@@ -22,9 +22,6 @@ public class BandMember {
 	@ManyToMany(mappedBy = "members")
 	private List<Band> bands;
 	
-	@Embedded
-	private Address adress;
-	
 	public BandMember() {
 	
 	}
@@ -60,14 +57,6 @@ public class BandMember {
 	public void setBands(List<Band> bands) {
 		this.bands = bands;
 	}
-	
-	public Address getAdress() {
-		return adress;
-	}
-	public void setAdress(Address adress) {
-		this.adress = adress;
-	}
-
 	
 	public void addBand(Band band) {
 		this.bands.add(band);

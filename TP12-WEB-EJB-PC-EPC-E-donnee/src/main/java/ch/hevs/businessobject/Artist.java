@@ -4,29 +4,35 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+
+import org.hibernate.annotations.DiscriminatorOptions;
 @Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class Artist {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private long id;
 	
+	@JoinColumn(nullable = false)
 	private String stageName;
 	
 	@OneToMany(mappedBy = "artist", cascade = CascadeType.ALL)
 	private List<Album> albums;
-	@OneToMany(mappedBy = "artist", cascade = CascadeType.ALL)
-	private List<Song> songs;
 	
 	@Embedded
 	private Address address;
 	private String genre;
-	
 	
 	public Artist() {
 	
@@ -47,12 +53,7 @@ public class Artist {
 	public void setAlbums(List<Album> albums) {
 		this.albums = albums;
 	}
-	public List<Song> getSongs() {
-		return songs;
-	}
-	public void setSongs(List<Song> songs) {
-		this.songs = songs;
-	}
+
 	public Address getAddress() {
 		return address;
 	}
@@ -71,7 +72,6 @@ public class Artist {
 		this.stageName = stageName;
 		this.genre = genre;
 		this.albums = new ArrayList<Album>();
-		this.songs = new ArrayList<Song>();
 	}
 	
 	public void addAlbum(Album album) {
@@ -79,10 +79,6 @@ public class Artist {
 		this.albums.add(album);
 	}
 	
-	public void addSong(Song song) {
-		song.setArtist(this);
-		this.songs.add(song);
-	}
 	
 	@Override
 	public String toString() {

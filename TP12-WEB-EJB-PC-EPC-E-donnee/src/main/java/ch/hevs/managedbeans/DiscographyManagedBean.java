@@ -48,8 +48,13 @@ public class DiscographyManagedBean {
 			for (Artist artist : this.artists) {
 				this.artistNames.add(artist.getStageName());
 			}
+			this.sourceArtistName = artistNames.get(0);
 			
-			this.albums = new ArrayList<Album>();
+			albums = disco.getAlbums(sourceArtistName);
+		    this.albumNames = new ArrayList<String>();
+			for (Album album : albums) {
+				this.albumNames.add(album.getName());
+			}
 			this.songs = new ArrayList<Song>();
 			
 	    }
@@ -110,7 +115,7 @@ public class DiscographyManagedBean {
 	public void updateSourceArtist(ValueChangeEvent event) {
     	this.sourceArtistName = (String)event.getNewValue();
     	
-    	albums = disco.getAlbums(this.sourceArtistName);
+    	List<Album> albums = disco.getAlbums(this.sourceArtistName);
 	    this.albumNames = new ArrayList<String>();
 		for (Album album : albums) {
 			this.albumNames.add(album.getName());

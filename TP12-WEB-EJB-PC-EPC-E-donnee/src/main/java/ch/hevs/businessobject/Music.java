@@ -5,10 +5,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
 //http://localhost:8080/TP12-WEB-EJB-PC-EPC-E-0.0.1-SNAPSHOT/faces/welcomeArtist.xhtml
 @Entity
-@Inheritance
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public abstract class Music {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)

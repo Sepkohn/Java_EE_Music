@@ -15,7 +15,7 @@
         	<br></br>
         	<h:panelGrid columns="5">
         		<h:outputText value="Select an Artist: "></h:outputText>
-	        	<h:selectOneMenu value="#{DiscographyManagedBean.artists}" valueChangeListener="#{DiscographyManagedBean.updateSourceArtist}" onchange="submit()">
+	        	<h:selectOneMenu value="#{DiscographyManagedBean.sourceArtistName}" valueChangeListener="#{DiscographyManagedBean.updateSourceArtist}" onchange="submit()">
 	        		<f:selectItems value="#{DiscographyManagedBean.artistNames}"/>
 	        	</h:selectOneMenu>
         	</h:panelGrid>

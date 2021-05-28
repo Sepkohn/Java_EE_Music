@@ -29,7 +29,7 @@ public class DiscographyBean implements Discography{
 
 	@Override
 	public List<Album> getAlbums(String artistName) {
-		return (List<Album>)em.createQuery("SELECT al FROM Album al, Artist a WHERE al.artist.id = a.id AND a.stageName=:artistName").setParameter("artistName", artistName.toUpperCase()).getResultList();
+		return (List<Album>)em.createQuery("SELECT al FROM Album al, Artist a WHERE al.artist.id = a.id AND a.stageName=:artistName").setParameter("artistName", artistName).getResultList();
 	}
 
 	@Override
@@ -39,7 +39,7 @@ public class DiscographyBean implements Discography{
 
 	@Override
 	public List<Song> getSongsFromAlbum(String albumName) {
-		return null;//return em.createQuery("FROM Song s ").getResultList(); //pas fini
+		return (List<Song>) em.createQuery("SELECT s FROM Album a, IN(a.songs) s WHERE a.name=:albumName").setParameter("albumName", albumName).getResultList(); //pas fini
 	}
 
 	@Override

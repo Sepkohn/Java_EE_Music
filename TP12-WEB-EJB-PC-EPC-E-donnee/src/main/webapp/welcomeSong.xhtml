@@ -15,8 +15,8 @@
         	<br></br>
         	<h:panelGrid columns="5">
         		<h:outputText value="Select a Song: "></h:outputText>
-	        	<h:selectOneMenu value="#{DiscographyManagedBean.albums}" valueChangeListener="#{DiscographyManagedBean.updateSourceAlbum}" onchange="submit()">
-	        		<f:selectItems value="#{DiscographyManagedBean.albumNames}"/>
+	        	<h:selectOneMenu value="#{DiscographyManagedBean.sourceSongName}" valueChangeListener="#{DiscographyManagedBean.updateSourceSong}" onchange="submit()">
+	        		<f:selectItems value="#{DiscographyManagedBean.songNames}"/>
 	        	</h:selectOneMenu>
         	</h:panelGrid>
         </h:form>

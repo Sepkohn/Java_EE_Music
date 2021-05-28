@@ -25,11 +25,14 @@ public class DiscographyManagedBean {
 	private List<String> albumNames;
 	private List<Song> songs;
 	private List<String> songNames;
+	private boolean albumLength;
 	
 	private String sourceArtistName;
 	private String sourceAlbumName;
+	private String sourceSongName;
 	
 	private Discography disco;
+	
 
 	
 	
@@ -55,7 +58,14 @@ public class DiscographyManagedBean {
 			for (Album album : albums) {
 				this.albumNames.add(album.getName());
 			}
-			this.songs = new ArrayList<Song>();
+			this.sourceAlbumName = albumNames.get(0);
+			
+			songs = disco.getSongsFromAlbum(this.sourceAlbumName);
+		    this.songNames = new ArrayList<String>();
+			for (Song song : songs) {
+				this.songNames.add(song.getName());
+			}
+			this.sourceSongName = songNames.get(0);
 			
 	    }
 
@@ -112,6 +122,23 @@ public class DiscographyManagedBean {
 		this.sourceArtistName = sourceArtistName;
 	}
 	
+	
+	public String getSourceAlbumName() {
+		return sourceAlbumName;
+	}
+	public void setSourceAlbumName(String sourceAlbumName) {
+		this.sourceAlbumName = sourceAlbumName;
+	}
+
+
+	public String getSourceSongName() {
+		return sourceSongName;
+	}
+	public void setSourceSongName(String sourceSongName) {
+		this.sourceSongName = sourceSongName;
+	}
+
+
 	public void updateSourceArtist(ValueChangeEvent event) {
     	this.sourceArtistName = (String)event.getNewValue();
     	
@@ -125,15 +152,23 @@ public class DiscographyManagedBean {
 	public void updateSourceAlbum(ValueChangeEvent event) {
     	this.sourceAlbumName = (String)event.getNewValue();
     	
-    	songs = disco.getSongsFromAlbum(this.sourceAlbumName);
-	    /*this.songNames = new ArrayList<String>();
+    	List<Song> songs = disco.getSongsFromAlbum(this.sourceAlbumName);
+	    this.songNames = new ArrayList<String>();
 		for (Song song : songs) {
 			this.songNames.add(song.getName());
-		}*/
+		}
+    }
+	
+	public void updateSourceSong(ValueChangeEvent event) {
+    	this.sourceSongName = (String)event.getNewValue();
     }
 	
 	public String toAlbums() {	
 		return "welcomeAlbum";
+	}
+	
+	public boolean getAlbumlength() {
+			return !this.albumNames.isEmpty();
 	}
 	 
 

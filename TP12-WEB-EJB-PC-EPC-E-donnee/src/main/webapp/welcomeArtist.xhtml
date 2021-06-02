@@ -20,11 +20,34 @@
 	        	</h:selectOneMenu>
         	</h:panelGrid>
        </h:form>
-        <h:form>
+          <h:form>
+		        <h:commandButton value="Show Albums" action="welcomeAlbum" ></h:commandButton>
+        </h:form>
+        <br /><br />
+          <h:form>
+		        <h:outputText value="stageName"></h:outputText>
+		        <h:inputText name="stageName" value="#{DiscographyManagedBean.newArtistName}" />
+		        <br />
+		        
+		        <h:outputText value="genre"></h:outputText>
+		        <h:inputText name="genre" value="#{DiscographyManagedBean.newGenre}" />
+		         <br />
+		        <h:commandButton value="Add Artist" action="#{DiscographyManagedBean.addArtist}"></h:commandButton>
+
+        </h:form>
+        
+        <!--  
+           <h:form>
 		        <h:commandLink action="welcomeAlbum">
-		         <h:outputText value="Show Albums" />
+		         <h:outputText value="Add Album" />
 		        </h:commandLink>
         </h:form>
+        <h:form>
+		        <h:commandLink action="welcomeAlbum">
+		         <h:outputText value="Add Songs" />
+		        </h:commandLink>
+        </h:form>
+        -->
     </ui:define>
 </ui:composition>
 </html>

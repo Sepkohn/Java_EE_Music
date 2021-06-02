@@ -7,6 +7,9 @@
    <PROCESS-ITEM-OUTPUT ID="welcomeAlbum::#welcomeAlbum.xhtml"
     NAME="output" PATH="/welcomeAlbum.xhtml"
     TARGET="rules:#welcomeAlbum.xhtml" TITLE="welcomeAlbum" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="showAddingResult::#showAddingResult.xhtml"
+    NAME="output1" PATH="/showAddingResult.xhtml"
+    TARGET="rules:#showAddingResult.xhtml" TITLE="showAddingResult" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
  </PROCESS-ITEM>
  <PROCESS-ITEM NAME="rules:#welcomeBank.xhtml" PATH="/welcomeBank.xhtml"
@@ -45,4 +48,7 @@
   <PROCESS-ITEM ID="rules:#welcomeSong.xhtml:0" NAME="item"
    PATH="/welcomeSong.xhtml" model-entity="JSFProcessItem"/>
  </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#showAddingResult.xhtml"
+  PATH="/showAddingResult.xhtml" SHAPE="480,424,50,25"
+  model-entity="JSFProcessGroup" persistent="true"/>
 </PROCESS>

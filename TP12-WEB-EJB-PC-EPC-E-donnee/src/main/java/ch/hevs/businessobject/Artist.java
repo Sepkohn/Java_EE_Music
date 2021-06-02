@@ -8,6 +8,7 @@ import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -27,11 +28,12 @@ public class Artist {
 	@JoinColumn(nullable = false)
 	private String stageName;
 	
-	@OneToMany(mappedBy = "artist", cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "artist", cascade = CascadeType.ALL)
 	private List<Album> albums;
 	
 	@Embedded
 	private Address address;
+	
 	private String genre;
 	
 	public Artist() {

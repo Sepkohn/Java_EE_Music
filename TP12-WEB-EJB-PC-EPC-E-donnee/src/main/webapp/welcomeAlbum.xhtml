@@ -10,9 +10,18 @@
 <ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
 	<ui:define name="content">
 		<h1><h:outputLabel value="#{DiscographyManagedBean.artist.stageName} "></h:outputLabel></h1>
-		<br></br>
+		<br/>
+		<h:outputLabel value="Genre : #{DiscographyManagedBean.artist.genre}"></h:outputLabel>
+		<br/>
+		<h:outputLabel value="Studio : #{DiscographyManagedBean.artist.address.street}, #{DiscographyManagedBean.artist.address.postalCode} #{DiscographyManagedBean.artist.address.city}"></h:outputLabel>
+		<br/>
+		<c:if test="#{DiscographyManagedBean.isSinger}">
+			<h:outputLabel value="Real name : #{DiscographyManagedBean.artist.realFirstname} #{DiscographyManagedBean.artist.realName}"></h:outputLabel>
+			<br/>
+		</c:if>
+		<br/>
 		<h:outputLabel value="This artist has #{DiscographyManagedBean.numberOfSongs} songs"></h:outputLabel>
-		<br></br>
+		<br/><br/>
 		<h:form>
 			<h:outputLabel value="Music Information:"></h:outputLabel>
 			<br></br>
@@ -39,10 +48,6 @@
 			<h:outputText value="Album Name"></h:outputText>
 			<h:inputText name="albumName"
 				value="#{DiscographyManagedBean.nameMusic}" required="true"/>
-			<br />
-			<h:outputText value="duration"></h:outputText>
-			<h:inputText name="duration"
-				value="#{DiscographyManagedBean.duration}" required="true"/>
 			<br />
 			<h:outputText value="year"></h:outputText>
 			<h:inputText name="year"

@@ -33,14 +33,29 @@
 		        <h:outputText value="genre"></h:outputText>
 		        <h:inputText name="genre" value="#{DiscographyManagedBean.newGenre}" required="true"/>
 		         <br />
-		         <h:selectOneRadio value="#{DiscographyManagedBean.artistType}" required="true">
-					<f:selectItem itemValue="Singer" itemLabel="Singer" />
+		         
+		         <h:outputText value="Street"></h:outputText>
+		        <h:inputText name="Street" value="#{DiscographyManagedBean.address.street}"/>
+		        <br />
+		        <h:outputText value="Postal Code "></h:outputText>
+		        <h:inputText name="PostalCode" value="#{DiscographyManagedBean.address.postalCode}"/>
+		        <br />
+		        <h:outputText value="City"></h:outputText>
+		        <h:inputText name="City" value="#{DiscographyManagedBean.address.city}"/>
+		        <br />
+		         
+		         <h:selectOneRadio value="#{DiscographyManagedBean.artistType}" required="true" onchange="">
+					<f:selectItem itemValue="Singer" itemLabel="Singer"/>
 					<f:selectItem itemValue="Band" itemLabel="Band" />
 				</h:selectOneRadio>
-		        <h:commandButton value="Add Artist" action="#{DiscographyManagedBean.addArtist}"></h:commandButton>
-		       
-
-
+				<!-- A mettre dans une condition dynamique pour le radio button -->
+					<h:outputText value="Firstname "></h:outputText>
+			        <h:inputText name="Firstname" value="#{DiscographyManagedBean.newArtistFirstname}"/>
+			        <br />
+			        <h:outputText value="Lastname"></h:outputText>
+			        <h:inputText name="Lastname" value="#{DiscographyManagedBean.newArtistLastname}"/>
+			        <br />
+			        <h:commandButton value="Add Artist" action="#{DiscographyManagedBean.addArtist}"></h:commandButton>
         </h:form>
     </ui:define>
 </ui:composition>

@@ -4,12 +4,20 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
     xmlns:ui="http://java.sun.com/jsf/facelets"
     xmlns:h="http://java.sun.com/jsf/html"
-    xmlns:f="http://java.sun.com/jsf/core">
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:c="http://java.sun.com/jsp/jstl/core">
 
 <ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
     <ui:define name="content">
-        <h:outputLabel value="Welcome to the Music Discography"></h:outputLabel>
-        <br></br>
+        <h1><h:outputLabel value="#{DiscographyManagedBean.album.name}"></h:outputLabel></h1>
+        <br/>
+		<h:outputLabel value="Duration : #{DiscographyManagedBean.album.duration} minutes"></h:outputLabel>
+		<br/>
+		<h:outputLabel value="Year : #{DiscographyManagedBean.album.year}"></h:outputLabel>
+		<br/>
+		<h:outputLabel value="Label : #{DiscographyManagedBean.album.label}"></h:outputLabel>
+		<br/>
+		<br/>
         <h:form>
         	<h:outputLabel value="Music Information:"></h:outputLabel>
         	<br></br>
@@ -21,9 +29,14 @@
         	</h:panelGrid>
         	<h:commandButton value="Delete Song" action="#{DiscographyManagedBean.deleteSong}"></h:commandButton>
         </h:form>
-        
+        <h:form>
+			<c:if test="#{DiscographyManagedBean.songlength}">
+				<h:commandLink action="SongDetail">
+					<h:outputText value="Show Song details" />
+				</h:commandLink>
+			</c:if>
+		</h:form>
         <br /><br />
-        
         <h:form>
 			<h:outputText value="Song Name"></h:outputText>
 			<h:inputText name="stageName"
@@ -32,12 +45,7 @@
 			<h:outputText value="duration"></h:outputText>
 			<h:inputText name="duration"
 				value="#{DiscographyManagedBean.duration}" required="true"/>
-			<br />
-			<h:outputText value="year"></h:outputText>
-			<h:inputText name="year"
-				value="#{DiscographyManagedBean.year}" required="true"/>
-			<br />
-		
+			<br />	
 			<h:commandButton value="Add Song"
 				action="#{DiscographyManagedBean.addSong}"></h:commandButton>
 			

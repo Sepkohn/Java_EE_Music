@@ -13,6 +13,7 @@ import javax.naming.NamingException;
 import ch.hevs.bankservice.Bank;
 import ch.hevs.bankservice.Discography;
 import ch.hevs.businessobject.Account;
+import ch.hevs.businessobject.Address;
 import ch.hevs.businessobject.Album;
 import ch.hevs.businessobject.Artist;
 import ch.hevs.businessobject.Band;
@@ -26,18 +27,20 @@ public class DiscographyManagedBean {
 	private List<String> albumNames;
 	private List<String> songNames;
 	private boolean albumLength;
+	private boolean songLength;
 	
 	private Artist artist;
 	private Album album;
 	private Song song;
-	//private String sourceArtistName;
-	//private String sourceAlbumName;
-	//private String sourceSongName;
 	
 	//Ajout Artist 
 	private String newArtistName;
 	private String newGenre;
 	private String artistType;
+	private String newArtistFirstname;
+	private String newArtistLastname;
+	
+	private Address address;
 	
 	//Ajout Album
 	private String nameMusic;
@@ -48,6 +51,7 @@ public class DiscographyManagedBean {
 	private String addingResult;
 	
 	private int numberOfSongs;
+	private boolean isSinger;
 	
 	
 	private Discography disco;
@@ -92,30 +96,6 @@ public class DiscographyManagedBean {
 	public void setSongNames(List<String> songNames) {
 		this.songNames = songNames;
 	}
-	
-	/*public String getSourceArtistName() {
-		return sourceArtistName;
-	}
-	public void setSourceArtistName(String sourceArtistName) {
-		this.sourceArtistName = sourceArtistName;
-	}*/
-	
-	
-	/*public String getSourceAlbumName() {
-		return sourceAlbumName;
-	}
-	public void setSourceAlbumName(String sourceAlbumName) {
-		this.sourceAlbumName = sourceAlbumName;
-	}*/
-
-
-	/*public String getSourceSongName() {
-		return sourceSongName;
-	}
-	public void setSourceSongName(String sourceSongName) {
-		this.sourceSongName = sourceSongName;
-	}*/
-
 
 	public void updateSourceArtist(ValueChangeEvent event) {
     	String sourceArtistName = (String)event.getNewValue();
@@ -182,17 +162,11 @@ public class DiscographyManagedBean {
 	public boolean getAlbumlength() {
 			return !this.albumNames.isEmpty();
 	}
-	 
 	
-	/*public void updateSourceArtistNew(ValueChangeEvent event) {
-    	this.sourceArtistName = (String)event.getNewValue();
-    	
-    	List<Album> albums = disco.getAlbums(this.sourceArtistName);
-	    this.albumNames = new ArrayList<String>();
-		for (Album album : albums) {
-			this.albumNames.add(album.getName());
-		}
-    }*/
+	public boolean getSonglength() {
+		return !this.songNames.isEmpty();
+}
+	 
 	
 	public int getNumberOfSongs() {
 		return disco.getNumberOfSongs(this.artist.getStageName());
@@ -213,6 +187,7 @@ public class DiscographyManagedBean {
 		default : 
 			artist = new Artist();
 		}
+		artist.setAddress(this.address);
 		
 		disco.addArtist(artist);
 		
@@ -227,7 +202,7 @@ public class DiscographyManagedBean {
 	
 	public String addAlbum() {
 
-		Album album = new Album(nameMusic, duration, year, label);
+		Album album = new Album(nameMusic, year, label);
 		//Artist artist = disco.getArtist(sourceArtistName);
 
 		disco.addAlbum(album, this.artist);
@@ -243,13 +218,14 @@ public class DiscographyManagedBean {
 	
 	public String addSong() {
 
-		Song song = new Song(nameMusic, duration, year);
+		Song song = new Song(nameMusic, duration, album.getYear());
 		Album album = disco.getAlbum(this.album.getName(), this.artist.getStageName());
+		album.setDuration(album.getDuration()+duration);
 		song.addAlbum(album);
 
 		disco.addSongToAlbum(song, album);
 		
-		songList();
+		albumList();
 		
 		clearInputs();
 		
@@ -266,6 +242,13 @@ public class DiscographyManagedBean {
 		this.year = 0;
 		this.label = null;
 		this.artistType = null;	
+		this.address = new Address();
+		this.newArtistFirstname = null;
+		this.newArtistLastname = null;
+	}
+	
+	public boolean getIsSinger() {
+		return this.artist.getClass().equals(Singer.class);
 	}
 	//--------------------------------------
 	
@@ -388,7 +371,7 @@ public class DiscographyManagedBean {
 	}
 	
 	public Artist getArtist() {
-		return this.artist;
+		return artist;
 	}
 
 	public Album getAlbum() {
@@ -398,6 +381,31 @@ public class DiscographyManagedBean {
 	public Song getSong() {
 		return song;
 	}
+	
+	public Address getAddress() {
+		return address;
+	}
+	public void setAddress(Address address) {
+		this.address = address;
+	}
+
+	public String getNewArtistFirstname() {
+		return newArtistFirstname;
+	}
+
+	public String getNewArtistLastname() {
+		return newArtistLastname;
+	}
+
+	public void setNewArtistFirstname(String newArtistFirstname) {
+		this.newArtistFirstname = newArtistFirstname;
+	}
+
+	public void setNewArtistLastname(String newArtistLastname) {
+		this.newArtistLastname = newArtistLastname;
+	}
+	
+	
 	
 	
 	

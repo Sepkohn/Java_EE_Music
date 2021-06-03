@@ -34,20 +34,20 @@
 
 		<h:form>
 			<h:outputText value="Album Name"></h:outputText>
-			<h:inputText name="stageName"
-				value="#{DiscographyManagedBean.nameAlbum}" />
+			<h:inputText name="albumName"
+				value="#{DiscographyManagedBean.nameMusic}" required="true"/>
 			<br />
 			<h:outputText value="duration"></h:outputText>
 			<h:inputText name="duration"
-				value="#{DiscographyManagedBean.duration}" />
+				value="#{DiscographyManagedBean.duration}" required="true"/>
 			<br />
 			<h:outputText value="year"></h:outputText>
 			<h:inputText name="year"
-				value="#{DiscographyManagedBean.year}" />
+				value="#{DiscographyManagedBean.year}" required="true"/>
 			<br />
 			<h:outputText value="label"></h:outputText>
 			<h:inputText name="label"
-				value="#{DiscographyManagedBean.label}" />
+				value="#{DiscographyManagedBean.label}" required="true"/>
 			<br />
 			
 			<h:commandButton value="Add Album"

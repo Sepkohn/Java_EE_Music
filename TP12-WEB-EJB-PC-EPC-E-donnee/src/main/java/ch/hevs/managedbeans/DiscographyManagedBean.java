@@ -15,6 +15,8 @@ import ch.hevs.bankservice.Discography;
 import ch.hevs.businessobject.Account;
 import ch.hevs.businessobject.Album;
 import ch.hevs.businessobject.Artist;
+import ch.hevs.businessobject.Band;
+import ch.hevs.businessobject.Singer;
 import ch.hevs.businessobject.Song;
 
 @Stateless
@@ -35,12 +37,15 @@ public class DiscographyManagedBean {
 	//Ajout Artist 
 	private String newArtistName;
 	private String newGenre;
+	private String artistType;
 	
 	//Ajout Album
-	private String nameAlbum;
+	private String nameMusic;
 	private int duration;
 	private int year;
 	private String label;
+	
+	private String addingResult;
 	
 	
 	private Discography disco;
@@ -57,37 +62,10 @@ public class DiscographyManagedBean {
 			
 			
 	    	// get clients
-			this.artists = disco.getArtists();
-			
-			this.artistNames = new ArrayList<String>();
-			for (Artist artist : this.artists) {
-				this.artistNames.add(artist.getStageName());
-			}
-			this.sourceArtistName = artistNames.get(0);
-			
-			albums = disco.getAlbums(sourceArtistName);
-		    this.albumNames = new ArrayList<String>();
-			for (Album album : albums) {
-				this.albumNames.add(album.getName());
-			}
-			this.sourceAlbumName = albumNames.get(0);
-			
-			songs = disco.getSongsFromAlbum(this.sourceAlbumName);
-		    this.songNames = new ArrayList<String>();
-			for (Song song : songs) {
-				this.songNames.add(song.getName());
-			}
-			this.sourceSongName = songNames.get(0);
-			
-			
-			
+			artistList();
+	
 			//Pour vider les champs lorsque l'on retourne sur une page
-			newArtistName=null;
-			newGenre=null;
-			nameAlbum=null;
-			duration=0;
-			year=0;
-			label=null;
+			clearInputs();
 			
 	    }
 
@@ -164,26 +142,55 @@ public class DiscographyManagedBean {
 	public void updateSourceArtist(ValueChangeEvent event) {
     	this.sourceArtistName = (String)event.getNewValue();
     	
-    	List<Album> albums = disco.getAlbums(this.sourceArtistName);
-	    this.albumNames = new ArrayList<String>();
-		for (Album album : albums) {
-			this.albumNames.add(album.getName());
-		}
+    	albumList();
+    	songList();
     }
 	
 	public void updateSourceAlbum(ValueChangeEvent event) {
     	this.sourceAlbumName = (String)event.getNewValue();
     	
-    	List<Song> songs = disco.getSongsFromAlbum(this.sourceAlbumName);
-	    this.songNames = new ArrayList<String>();
-		for (Song song : songs) {
-			this.songNames.add(song.getName());
-		}
+    	songList();
     }
 	
 	public void updateSourceSong(ValueChangeEvent event) {
     	this.sourceSongName = (String)event.getNewValue();
     }
+	
+	
+	private void artistList() {
+		this.artists = disco.getArtists();
+		
+		this.artistNames = new ArrayList<String>();
+		for (Artist artist : this.artists) {
+			this.artistNames.add(artist.getStageName());
+		}
+		this.sourceArtistName = artistNames.get(0);
+		albumList();
+	}
+	private void albumList() {
+		
+		albums = disco.getAlbums(sourceArtistName);
+	    this.albumNames = new ArrayList<String>();
+		for (Album album : albums) {
+			this.albumNames.add(album.getName());
+		}
+		if(!albumNames.isEmpty()) {
+			this.sourceAlbumName = albumNames.get(0);
+			songList();
+		}
+		
+	}
+	
+	private void songList() {
+		songs = disco.getSongsFromAlbum(this.sourceAlbumName, this.sourceArtistName);
+	    this.songNames = new ArrayList<String>();
+		for (Song song : songs) {
+			this.songNames.add(song.getName());
+		}
+		if(!songNames.isEmpty()) {
+			this.sourceSongName = songNames.get(0);
+		}
+	}
 	
 	public String toAlbums() {	
 		return "welcomeAlbum";
@@ -208,20 +215,70 @@ public class DiscographyManagedBean {
 	//ADDING ------------------------------
 	public String addArtist() {
 		
-		Artist artist = new Artist(newArtistName, newGenre);
+		Artist artist;
+		switch(this.artistType) {
+		case("Singer"):
+			artist = new Singer(newArtistName, newGenre);
+			break;
+		case("Band"):
+			artist = new Band(newArtistName, newGenre);
+			break;
+		default : 
+			artist = new Artist();
+		}
+		
 		disco.addArtist(artist);
+		
+		artistList();
+		
+		clearInputs();
+		
+		this.addingResult = "Artiste";
 		
 		return "showAddingResult";
 	}
 	
 	public String addAlbum() {
 
-		Album album = new Album(nameAlbum, duration, year, label);
+		Album album = new Album(nameMusic, duration, year, label);
 		Artist artist = disco.getArtist(sourceArtistName);
 
 		disco.addAlbum(album, artist);
 		
+		albumList();
+		
+		clearInputs();
+		
+		this.addingResult = "Album";
+		
 		return "showAddingResult";
+	}
+	
+	public String addSong() {
+
+		Song song = new Song(nameMusic, duration, year);
+		Album album = disco.getAlbum(sourceAlbumName, sourceArtistName);
+		song.addAlbum(album);
+
+		disco.addSongToAlbum(song, album);
+		
+		songList();
+		
+		clearInputs();
+		
+		this.addingResult = "Chanson";
+		
+		return "showAddingResult";
+	}
+	
+	private void clearInputs() {
+		this.newArtistName = null;
+		this.newGenre = null;
+		this.nameMusic = null;
+		this.duration = 0;
+		this.year = 0;
+		this.label = null;
+		this.artistType = null;	
 	}
 	//--------------------
 
@@ -250,13 +307,13 @@ public class DiscographyManagedBean {
 	
 	
 	
-	public String getNameAlbum() {
-		return nameAlbum;
+	public String getNameMusic() {
+		return nameMusic;
 	}
 
 
-	public void setNameAlbum(String nameAlbum) {
-		this.nameAlbum = nameAlbum;
+	public void setNameMusic(String nameAlbum) {
+		this.nameMusic = nameAlbum;
 	}
 	public int getDuration() {
 		return duration;
@@ -286,4 +343,27 @@ public class DiscographyManagedBean {
 	public void setLabel(String label) {
 		this.label = label;
 	}
+
+
+	public String getArtistType() {
+		return artistType;
+	}
+
+
+	public void setArtistType(String artistType) {
+		this.artistType = artistType;
+	}
+
+
+	public String getAddingResult() {
+		return addingResult;
+	}
+
+	public void setAddingResult(String addingResult) {
+		this.addingResult = addingResult;
+	}
+	
+	
+	
+	
 }

@@ -20,6 +20,24 @@
 	        	</h:selectOneMenu>
         	</h:panelGrid>
         </h:form>
+        
+        <h:form>
+			<h:outputText value="Song Name"></h:outputText>
+			<h:inputText name="stageName"
+				value="#{DiscographyManagedBean.nameMusic}" required="true"/>
+			<br />
+			<h:outputText value="duration"></h:outputText>
+			<h:inputText name="duration"
+				value="#{DiscographyManagedBean.duration}" required="true"/>
+			<br />
+			<h:outputText value="year"></h:outputText>
+			<h:inputText name="year"
+				value="#{DiscographyManagedBean.year}" required="true"/>
+			<br />
+		
+			<h:commandButton value="Add Song"
+				action="#{DiscographyManagedBean.addSong}"></h:commandButton>
+		</h:form>
     </ui:define>
 </ui:composition>
 </html>

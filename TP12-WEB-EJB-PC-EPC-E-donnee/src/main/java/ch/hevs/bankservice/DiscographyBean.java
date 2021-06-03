@@ -11,6 +11,8 @@ import ch.hevs.businessobject.Album;
 import ch.hevs.businessobject.Artist;
 import ch.hevs.businessobject.Song;
 
+import javax.persistence.Query;
+
 @Stateless
 //@RolesAllowed(value = {"visitor", "admin"})
 public class DiscographyBean implements Discography{
@@ -24,10 +26,10 @@ public class DiscographyBean implements Discography{
 		return em.createQuery("FROM Artist").getResultList();
 	}
 
-	/*@Override
+	@Override
 	public Artist getArtist(Long id) {
 		return (Artist) em.createQuery("FROM Artist a where a.id=:id").setParameter("id", id).getSingleResult();
-	}*/
+	}
 	
 	
 	@Override
@@ -42,13 +44,19 @@ public class DiscographyBean implements Discography{
 	}
 
 	@Override
-	public Album getAlbum(long id) {
-		return (Album) em.createQuery("FROM Album a where a.id=:id").setParameter("id", id).getSingleResult();
+	public Album getAlbum(String albumName, String artistName) {
+		Query query = em.createQuery("SELECT a FROM Album a, Artist ar where a.name=:albumName AND ar.stageName=:artistName AND a.artist.id = ar.id");
+		query.setParameter("albumName", albumName);
+		query.setParameter("artistName", artistName);
+		return (Album) query.getSingleResult();
 	}
 
 	@Override
-	public List<Song> getSongsFromAlbum(String albumName) {
-		return (List<Song>) em.createQuery("SELECT s FROM Album a, IN(a.songs) s WHERE a.name=:albumName").setParameter("albumName", albumName).getResultList(); //pas fini
+	public List<Song> getSongsFromAlbum(String albumName, String artistName) {
+		Query query = em.createQuery("SELECT s FROM Artist ar, Album a, IN(a.songs) s where a.name=:albumName AND ar.stageName=:artistName AND a.artist.id = ar.id");
+		query.setParameter("albumName", albumName);
+		query.setParameter("artistName", artistName);
+		return (List<Song>) query.getResultList();
 	}
 
 	@Override
@@ -63,16 +71,16 @@ public class DiscographyBean implements Discography{
 
 	@Override
 	public void addAlbum(Album album, Artist artist) {
-		Artist copyArtist = em.merge(artist);
-		Album copyAlbum = em.merge(album);
 		artist.addAlbum(album);
+		Artist copyArtist = em.merge(artist);
 	}
 	
 	@Override
 	public void addSongToAlbum(Song song, Album album) {
+		album.addSong(song);
 		Album copyAlbum = em.merge(album);
 		Song copySong = em.merge(song);
-		album.addSong(song);	
+			
 	}
 	
 	

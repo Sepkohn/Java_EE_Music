@@ -26,28 +26,19 @@
         <br /><br />
           <h:form>
 		        <h:outputText value="stageName"></h:outputText>
-		        <h:inputText name="stageName" value="#{DiscographyManagedBean.newArtistName}" />
+		        <h:inputText name="stageName" value="#{DiscographyManagedBean.newArtistName}" required="true"/>
 		        <br />
 		        
 		        <h:outputText value="genre"></h:outputText>
-		        <h:inputText name="genre" value="#{DiscographyManagedBean.newGenre}" />
+		        <h:inputText name="genre" value="#{DiscographyManagedBean.newGenre}" required="true"/>
 		         <br />
+		         <h:selectOneRadio value="#{DiscographyManagedBean.artistType}" required="true">
+					<f:selectItem itemValue="Singer" itemLabel="Singer" />
+					<f:selectItem itemValue="Band" itemLabel="Band" />
+				</h:selectOneRadio>
 		        <h:commandButton value="Add Artist" action="#{DiscographyManagedBean.addArtist}"></h:commandButton>
 
         </h:form>
-        
-        <!--  
-           <h:form>
-		        <h:commandLink action="welcomeAlbum">
-		         <h:outputText value="Add Album" />
-		        </h:commandLink>
-        </h:form>
-        <h:form>
-		        <h:commandLink action="welcomeAlbum">
-		         <h:outputText value="Add Songs" />
-		        </h:commandLink>
-        </h:form>
-        -->
     </ui:define>
 </ui:composition>
 </html>

@@ -22,7 +22,7 @@ import org.hibernate.annotations.DiscriminatorOptions;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class Artist {
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	
 	@JoinColumn(nullable = false)

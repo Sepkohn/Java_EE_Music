@@ -27,8 +27,8 @@
 	        		<f:selectItems value="#{DiscographyManagedBean.songNames}"/>
 	        	</h:selectOneMenu>
         	</h:panelGrid>
+        	<h:commandButton value="Delete Song" action="#{DiscographyManagedBean.deleteSong}"></h:commandButton>
         </h:form>
-
         <h:form>
 			<c:if test="#{DiscographyManagedBean.songlength}">
 				<h:commandLink action="SongDetail">
@@ -48,6 +48,7 @@
 			<br />	
 			<h:commandButton value="Add Song"
 				action="#{DiscographyManagedBean.addSong}"></h:commandButton>
+			
 		</h:form>
     </ui:define>
 </ui:composition>

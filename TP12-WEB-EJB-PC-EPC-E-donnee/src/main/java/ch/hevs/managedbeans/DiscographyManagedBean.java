@@ -173,7 +173,7 @@ public class DiscographyManagedBean {
 	}
 	
 	
-	//ADDING ------------------------------
+	//ADDING -------------------------------------------------
 	public String addArtist() {
 		
 		Artist artist;
@@ -250,9 +250,46 @@ public class DiscographyManagedBean {
 	public boolean getIsSinger() {
 		return this.artist.getClass().equals(Singer.class);
 	}
-	//--------------------
+	//--------------------------------------
+	
+	public String deleteArtist() {
+	
+		
+		
+	disco.deleteArtist(this.artist);
+	System.out.println(artist.getId());
+	artistList();
+	
+	clearInputs();
+	
+	this.addingResult = "Delete Artiste";
+	
+	return "showAddingResult";
+	}
 
 	
+	public String deleteSong() {
+	
+		disco.deleteSongToAlbum(this.song, this.album);
+
+	
+		songList();
+		clearInputs();
+		this.addingResult = "Delete Song";
+	
+		return "showAddingResult";
+	}
+	
+	public String deleteAlbum() {
+		
+		disco.deleteAlbum(this.album, this.artist);
+
+		albumList();
+		clearInputs();
+		this.addingResult = "Delete Album";
+	
+		return "showAddingResult";
+	}
 	
 	//Getter Setter
 

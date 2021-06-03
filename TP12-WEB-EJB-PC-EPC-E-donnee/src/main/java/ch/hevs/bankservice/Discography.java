@@ -29,4 +29,9 @@ public interface Discography {
 
 	int getNumberOfSongs(String artistName);
 	
+	void deleteArtist(Artist artist);
+	void deleteAlbum(Album album, Artist artist);
+	void deleteSongToAlbum(Song song, Album album);
+
+	
 }

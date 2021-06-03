@@ -33,6 +33,7 @@
 					<f:selectItems value="#{DiscographyManagedBean.albumNames}" />
 				</h:selectOneMenu>
 			</h:panelGrid>
+			<h:commandButton value="Delete Album" action="#{DiscographyManagedBean.deleteAlbum}"></h:commandButton>
 		</h:form>
 		<h:form>
 			<c:if test="#{DiscographyManagedBean.albumlength}">

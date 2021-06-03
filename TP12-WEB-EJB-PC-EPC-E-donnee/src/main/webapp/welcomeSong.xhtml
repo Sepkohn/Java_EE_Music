@@ -19,7 +19,9 @@
 	        		<f:selectItems value="#{DiscographyManagedBean.songNames}"/>
 	        	</h:selectOneMenu>
         	</h:panelGrid>
+        	<h:commandButton value="Delete Song" action="#{DiscographyManagedBean.deleteSong}"></h:commandButton>
         </h:form>
+        
         <br /><br />
         
         <h:form>
@@ -38,6 +40,7 @@
 		
 			<h:commandButton value="Add Song"
 				action="#{DiscographyManagedBean.addSong}"></h:commandButton>
+			
 		</h:form>
     </ui:define>
 </ui:composition>

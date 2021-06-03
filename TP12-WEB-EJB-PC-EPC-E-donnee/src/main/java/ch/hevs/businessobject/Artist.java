@@ -87,4 +87,9 @@ public class Artist {
 		String result = id + "-" + stageName;
 		return result;
 	}
+
+	public void removeAlbum(Album album) {
+		this.albums.remove(album);
+		
+	}
 }

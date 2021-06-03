@@ -22,7 +22,6 @@ public class DiscographyBean implements Discography{
 	
 	
 	public List<Artist> getArtists() {
-	
 		return em.createQuery("FROM Artist").getResultList();
 	}
 
@@ -81,6 +80,18 @@ public class DiscographyBean implements Discography{
 		Album copyAlbum = em.merge(album);
 		Song copySong = em.merge(song);
 			
+	}
+
+	@Override
+	public int getNumberOfSongs(String artistName) {
+		Artist artist = getArtist(artistName);
+		int numberMusics = 0;
+		for (Album album : artist.getAlbums()) {
+			for (Song song : album.getSongs()) {
+				numberMusics++;
+			}
+		}
+		return numberMusics;
 	}
 	
 	

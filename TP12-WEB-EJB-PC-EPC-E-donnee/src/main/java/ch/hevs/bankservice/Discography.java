@@ -26,6 +26,7 @@ public interface Discography {
 	void addArtist(Artist artist);
 	void addAlbum(Album album, Artist artist);
 	void addSongToAlbum(Song song, Album album);
-	
+
+	int getNumberOfSongs(String artistName);
 	
 }

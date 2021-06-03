@@ -22,11 +22,8 @@ import ch.hevs.businessobject.Song;
 @Stateless
 public class DiscographyManagedBean {
 	
-	private List<Artist> artists;
 	private List<String> artistNames;
-	private List<Album> albums;
 	private List<String> albumNames;
-	private List<Song> songs;
 	private List<String> songNames;
 	private boolean albumLength;
 	
@@ -46,6 +43,8 @@ public class DiscographyManagedBean {
 	private String label;
 	
 	private String addingResult;
+	
+	private int numberOfSongs;
 	
 	
 	private Discography disco;
@@ -69,14 +68,6 @@ public class DiscographyManagedBean {
 			
 	    }
 
-
-	public List<Artist> getArtists() {
-		return artists;
-	}
-	public void setArtists(List<Artist> artists) {
-		this.artists = artists;
-	}
-
 	public List<String> getArtistNames() {
 		return artistNames;
 	}
@@ -97,22 +88,6 @@ public class DiscographyManagedBean {
 	}
 	public void setSongNames(List<String> songNames) {
 		this.songNames = songNames;
-	}
-
-
-	public List<Album> getAlbums() {
-		return albums;
-	}
-	public void setAlbums(List<Album> albums) {
-		this.albums = albums;
-	}
-
-
-	public List<Song> getSongs() {
-		return songs;
-	}
-	public void setSongs(List<Song> songs) {
-		this.songs = songs;
 	}
 	
 	public String getSourceArtistName() {
@@ -158,10 +133,10 @@ public class DiscographyManagedBean {
 	
 	
 	private void artistList() {
-		this.artists = disco.getArtists();
+		List<Artist> artists = disco.getArtists();
 		
 		this.artistNames = new ArrayList<String>();
-		for (Artist artist : this.artists) {
+		for (Artist artist : artists) {
 			this.artistNames.add(artist.getStageName());
 		}
 		this.sourceArtistName = artistNames.get(0);
@@ -169,7 +144,7 @@ public class DiscographyManagedBean {
 	}
 	private void albumList() {
 		
-		albums = disco.getAlbums(sourceArtistName);
+		List<Album> albums = disco.getAlbums(sourceArtistName);
 	    this.albumNames = new ArrayList<String>();
 		for (Album album : albums) {
 			this.albumNames.add(album.getName());
@@ -182,7 +157,7 @@ public class DiscographyManagedBean {
 	}
 	
 	private void songList() {
-		songs = disco.getSongsFromAlbum(this.sourceAlbumName, this.sourceArtistName);
+		List<Song> songs = disco.getSongsFromAlbum(this.sourceAlbumName, this.sourceArtistName);
 	    this.songNames = new ArrayList<String>();
 		for (Song song : songs) {
 			this.songNames.add(song.getName());
@@ -210,6 +185,10 @@ public class DiscographyManagedBean {
 			this.albumNames.add(album.getName());
 		}
     }
+	
+	public int getNumberOfSongs() {
+		return disco.getNumberOfSongs(this.sourceArtistName);
+	}
 	
 	
 	//ADDING ------------------------------

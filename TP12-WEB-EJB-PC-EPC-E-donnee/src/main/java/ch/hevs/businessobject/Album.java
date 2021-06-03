@@ -3,6 +3,7 @@ package ch.hevs.businessobject;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Inheritance;
@@ -13,7 +14,7 @@ import javax.persistence.ManyToOne;
 @Inheritance
 public class Album extends Music{
 	
-	@ManyToMany(fetch = FetchType.EAGER, mappedBy = "albums")
+	@ManyToMany(fetch = FetchType.EAGER, mappedBy = "albums",  cascade = CascadeType.ALL)
 	private List<Song> songs;
 	
 	private String label;
@@ -53,8 +54,10 @@ public class Album extends Music{
 	}
 	
 	public void addSong(Song song) {
-		this.songs.add(song);
-		
+		this.songs.add(song);	
+	}
+	public void removeSong(Song song) {
+		this.songs.remove(song);	
 	}
 		
 }

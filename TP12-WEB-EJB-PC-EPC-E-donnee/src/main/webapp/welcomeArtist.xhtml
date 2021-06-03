@@ -22,6 +22,7 @@
        </h:form>
           <h:form>
 		        <h:commandButton value="Show Albums" action="welcomeAlbum" ></h:commandButton>
+		         <h:commandButton value="Delete Artist" action="#{DiscographyManagedBean.deleteArtist}"></h:commandButton>
         </h:form>
         <br /><br />
           <h:form>
@@ -37,6 +38,8 @@
 					<f:selectItem itemValue="Band" itemLabel="Band" />
 				</h:selectOneRadio>
 		        <h:commandButton value="Add Artist" action="#{DiscographyManagedBean.addArtist}"></h:commandButton>
+		       
+
 
         </h:form>
     </ui:define>

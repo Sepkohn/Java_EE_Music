@@ -13,10 +13,18 @@
    <from-outcome>welcomeSong</from-outcome>
    <to-view-id>/welcomeSong.xhtml</to-view-id>
   </navigation-case>
+  <navigation-case>
+   <from-outcome>showAddingResult</from-outcome>
+   <to-view-id>/showAddingResult.xhtml</to-view-id>
+  </navigation-case>
  </navigation-rule>
  <navigation-rule>
   <display-name>welcomeSong.xhtml</display-name>
   <from-view-id>/welcomeSong.xhtml</from-view-id>
+  <navigation-case>
+   <from-outcome>showAddingResult</from-outcome>
+   <to-view-id>/showAddingResult.xhtml</to-view-id>
+  </navigation-case>
  </navigation-rule>
  <navigation-rule>
   <display-name>welcomeBank.xhtml</display-name>

@@ -13,7 +13,7 @@ import javax.persistence.ManyToOne;
 @Inheritance
 public class Album extends Music{
 	
-	@ManyToMany(mappedBy = "albums")
+	@ManyToMany(fetch = FetchType.EAGER, mappedBy = "albums")
 	private List<Song> songs;
 	
 	private String label;

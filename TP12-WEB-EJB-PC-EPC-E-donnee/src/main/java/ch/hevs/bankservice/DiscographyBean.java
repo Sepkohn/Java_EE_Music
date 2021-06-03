@@ -2,6 +2,7 @@ package ch.hevs.bankservice;
 
 import java.util.List;
 
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -11,22 +12,30 @@ import ch.hevs.businessobject.Artist;
 import ch.hevs.businessobject.Song;
 
 @Stateless
+//@RolesAllowed(value = {"visitor", "admin"})
 public class DiscographyBean implements Discography{
 
 	@PersistenceContext(name = "DiscoPU")
 	private EntityManager em;
-
+	
 	
 	public List<Artist> getArtists() {
 	
 		return em.createQuery("FROM Artist").getResultList();
 	}
 
-	@Override
+	/*@Override
 	public Artist getArtist(Long id) {
 		return (Artist) em.createQuery("FROM Artist a where a.id=:id").setParameter("id", id).getSingleResult();
+	}*/
+	
+	
+	@Override
+	public Artist getArtist(String artistName) {
+		return (Artist) em.createQuery("FROM Artist a where a.stageName=:artistName").setParameter("artistName", artistName).getSingleResult();
 	}
-
+	
+	
 	@Override
 	public List<Album> getAlbums(String artistName) {
 		return (List<Album>)em.createQuery("SELECT al FROM Album al, Artist a WHERE al.artist.id = a.id AND a.stageName=:artistName").setParameter("artistName", artistName).getResultList();

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Inheritance;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
@@ -14,9 +15,10 @@ public class Album extends Music{
 	
 	@ManyToMany(mappedBy = "albums")
 	private List<Song> songs;
+	
 	private String label;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	private Artist artist;
 	
 	public List<Song> getSongs() {

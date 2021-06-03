@@ -10,6 +10,7 @@ import javax.naming.NamingException;
 
 import ch.hevs.bankservice.Bank;
 import ch.hevs.businessobject.Account;
+import ch.hevs.businessobject.Client;
 
 
 /**
@@ -19,8 +20,8 @@ import ch.hevs.businessobject.Account;
 
 public class TransferBean
 {
-	/* private List<Client> clients;
-       private List<String> clientNames;
+	private List<Client> clients;
+    private List<String> clientNames;
     private List<String> sourceAccountDescriptions;
     private List<String> destinationAccountDescriptions;
     private String sourceAccountDescription;
@@ -161,5 +162,5 @@ public class TransferBean
     	}
 
 		return "showTransferResult"; //  the String value returned represents the outcome used by the navigation handler to determine what page to display next.
-	} */
+	} 
 }

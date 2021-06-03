@@ -13,8 +13,8 @@ public interface Discography {
 	
 	List<Artist> getArtists();
 	
-	Artist getArtist(Long id);
-	
+	//Artist getArtist(Long id);
+	Artist getArtist(String artistName);
 	List<Album> getAlbums(String artistName);
 	
 	Album getAlbum(long id);

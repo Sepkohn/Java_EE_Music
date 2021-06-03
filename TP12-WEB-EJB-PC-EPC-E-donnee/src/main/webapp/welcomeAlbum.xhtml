@@ -2,33 +2,59 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:ui="http://java.sun.com/jsf/facelets"
-    xmlns:h="http://java.sun.com/jsf/html"
-    xmlns:f="http://java.sun.com/jsf/core"
-    xmlns:c="http://java.sun.com/jsp/jstl/core">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
 
 <ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
-    <ui:define name="content">
-        <h:outputLabel value="Welcome to the Music Discography"></h:outputLabel>
-        <br></br>
-        <h:form>
-        	<h:outputLabel value="Music Information:"></h:outputLabel>
-        	<br></br>
-        	<h:panelGrid columns="5">
-        		<h:outputText value="Select an Album: "></h:outputText>
-	        	<h:selectOneMenu value="#{DiscographyManagedBean.sourceAlbumName}" valueChangeListener="#{DiscographyManagedBean.updateSourceAlbum}" onchange="submit()">
-	        		<f:selectItems value="#{DiscographyManagedBean.albumNames}"/>
-	        	</h:selectOneMenu>
-        	</h:panelGrid>
-        </h:form>
-	        <h:form>
-	        <c:if test = "#{DiscographyManagedBean.albumlength}">
-			        <h:commandLink action="welcomeSong">
-			         <h:outputText value="Show Songs" />
-			        </h:commandLink>
+	<ui:define name="content">
+		<h:outputLabel value="Welcome to the Music Discography"></h:outputLabel>
+		<br></br>
+		<h:form>
+			<h:outputLabel value="Music Information:"></h:outputLabel>
+			<br></br>
+			<h:panelGrid columns="5">
+				<h:outputText value="Select an Album: "></h:outputText>
+				<h:selectOneMenu value="#{DiscographyManagedBean.sourceAlbumName}"
+					valueChangeListener="#{DiscographyManagedBean.updateSourceAlbum}"
+					onchange="submit()">
+					<f:selectItems value="#{DiscographyManagedBean.albumNames}" />
+				</h:selectOneMenu>
+			</h:panelGrid>
+		</h:form>
+		<h:form>
+			<c:if test="#{DiscographyManagedBean.albumlength}">
+				<h:commandLink action="welcomeSong">
+					<h:outputText value="Show Songs" />
+				</h:commandLink>
 			</c:if>
-	        </h:form>
-        
-    </ui:define>
+		</h:form>
+		<br /><br />
+
+		<h:form>
+			<h:outputText value="Album Name"></h:outputText>
+			<h:inputText name="stageName"
+				value="#{DiscographyManagedBean.nameAlbum}" />
+			<br />
+			<h:outputText value="duration"></h:outputText>
+			<h:inputText name="duration"
+				value="#{DiscographyManagedBean.duration}" />
+			<br />
+			<h:outputText value="year"></h:outputText>
+			<h:inputText name="year"
+				value="#{DiscographyManagedBean.year}" />
+			<br />
+			<h:outputText value="label"></h:outputText>
+			<h:inputText name="label"
+				value="#{DiscographyManagedBean.label}" />
+			<br />
+			
+			<h:commandButton value="Add Album"
+				action="#{DiscographyManagedBean.addAlbum}"></h:commandButton>
+		</h:form>
+
+
+	</ui:define>
 </ui:composition>
 </html>

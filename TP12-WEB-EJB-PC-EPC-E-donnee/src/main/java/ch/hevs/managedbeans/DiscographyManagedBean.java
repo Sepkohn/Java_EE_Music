@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateful;
+import javax.ejb.Stateless;
 import javax.faces.event.ValueChangeEvent;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -16,7 +17,7 @@ import ch.hevs.businessobject.Album;
 import ch.hevs.businessobject.Artist;
 import ch.hevs.businessobject.Song;
 
-@Stateful
+@Stateless
 public class DiscographyManagedBean {
 	
 	private List<Artist> artists;
@@ -30,6 +31,17 @@ public class DiscographyManagedBean {
 	private String sourceArtistName;
 	private String sourceAlbumName;
 	private String sourceSongName;
+	
+	//Ajout Artist 
+	private String newArtistName;
+	private String newGenre;
+	
+	//Ajout Album
+	private String nameAlbum;
+	private int duration;
+	private int year;
+	private String label;
+	
 	
 	private Discography disco;
 	
@@ -66,6 +78,16 @@ public class DiscographyManagedBean {
 				this.songNames.add(song.getName());
 			}
 			this.sourceSongName = songNames.get(0);
+			
+			
+			
+			//Pour vider les champs lorsque l'on retourne sur une page
+			newArtistName=null;
+			newGenre=null;
+			nameAlbum=null;
+			duration=0;
+			year=0;
+			label=null;
 			
 	    }
 
@@ -171,5 +193,97 @@ public class DiscographyManagedBean {
 			return !this.albumNames.isEmpty();
 	}
 	 
+	
+	public void updateSourceArtistNew(ValueChangeEvent event) {
+    	this.sourceArtistName = (String)event.getNewValue();
+    	
+    	List<Album> albums = disco.getAlbums(this.sourceArtistName);
+	    this.albumNames = new ArrayList<String>();
+		for (Album album : albums) {
+			this.albumNames.add(album.getName());
+		}
+    }
+	
+	
+	//ADDING ------------------------------
+	public String addArtist() {
+		
+		Artist artist = new Artist(newArtistName, newGenre);
+		disco.addArtist(artist);
+		
+		return "showAddingResult";
+	}
+	
+	public String addAlbum() {
 
+		Album album = new Album(nameAlbum, duration, year, label);
+		Artist artist = disco.getArtist(sourceArtistName);
+
+		disco.addAlbum(album, artist);
+		
+		return "showAddingResult";
+	}
+	//--------------------
+
+	
+	
+	//Getter Setter
+
+	public String getNewArtistName() {
+		return newArtistName;
+	}
+
+
+	public void setNewArtistName(String newArtistName) {
+		this.newArtistName = newArtistName;
+	}
+
+
+	public String getNewGenre() {
+		return newGenre;
+	}
+
+
+	public void setNewGenre(String newGenre) {
+		this.newGenre = newGenre;
+	}
+	
+	
+	
+	public String getNameAlbum() {
+		return nameAlbum;
+	}
+
+
+	public void setNameAlbum(String nameAlbum) {
+		this.nameAlbum = nameAlbum;
+	}
+	public int getDuration() {
+		return duration;
+	}
+
+
+	public void setDuration(int duration) {
+		this.duration = duration;
+	}
+
+
+	public int getYear() {
+		return year;
+	}
+
+
+	public void setYear(int year) {
+		this.year = year;
+	}
+
+
+	public String getLabel() {
+		return label;
+	}
+
+
+	public void setLabel(String label) {
+		this.label = label;
+	}
 }

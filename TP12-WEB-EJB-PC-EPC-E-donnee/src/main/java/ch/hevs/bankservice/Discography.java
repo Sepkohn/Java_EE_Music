@@ -21,7 +21,7 @@ public interface Discography {
 	
 	List<Song> getSongsFromAlbum(String albumName, String artistName);
 	
-	Song getSong(long id);
+	Song getSong(String songName, String albumName);
 	
 	void addArtist(Artist artist);
 	void addAlbum(Album album, Artist artist);

@@ -59,8 +59,11 @@ public class DiscographyBean implements Discography{
 	}
 
 	@Override
-	public Song getSong(long id) {
-		return (Song) em.createQuery("FROM Song s where s.id=:id").setParameter("id", id).getSingleResult();
+	public Song getSong(String songName, String albumName) {
+		Query query = em.createQuery("SELECT s FROM Song s, Album a, IN(s.albums) al where s.name =:songName AND a.name =:albumName AND al.id = a.id");
+		query.setParameter("songName", songName);
+		query.setParameter("albumName", albumName);
+		return (Song) query.getSingleResult();
 	}
 
 	@Override

@@ -15,11 +15,12 @@
         	<br></br>
         	<h:panelGrid columns="5">
         		<h:outputText value="Select a Song: "></h:outputText>
-	        	<h:selectOneMenu value="#{DiscographyManagedBean.sourceSongName}" valueChangeListener="#{DiscographyManagedBean.updateSourceSong}" onchange="submit()">
+	        	<h:selectOneMenu value="#{DiscographyManagedBean.song.name}" valueChangeListener="#{DiscographyManagedBean.updateSourceSong}" onchange="submit()">
 	        		<f:selectItems value="#{DiscographyManagedBean.songNames}"/>
 	        	</h:selectOneMenu>
         	</h:panelGrid>
         </h:form>
+        <br /><br />
         
         <h:form>
 			<h:outputText value="Song Name"></h:outputText>

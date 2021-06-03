@@ -22,7 +22,6 @@ public class DiscographyBean implements Discography{
 	
 	
 	public List<Artist> getArtists() {
-	
 		return em.createQuery("FROM Artist").getResultList();
 	}
 
@@ -60,8 +59,11 @@ public class DiscographyBean implements Discography{
 	}
 
 	@Override
-	public Song getSong(long id) {
-		return (Song) em.createQuery("FROM Song s where s.id=:id").setParameter("id", id).getSingleResult();
+	public Song getSong(String songName, String albumName) {
+		Query query = em.createQuery("SELECT s FROM Song s, Album a, IN(s.albums) al where s.name =:songName AND a.name =:albumName AND al.id = a.id");
+		query.setParameter("songName", songName);
+		query.setParameter("albumName", albumName);
+		return (Song) query.getSingleResult();
 	}
 
 	@Override
@@ -81,6 +83,18 @@ public class DiscographyBean implements Discography{
 		Album copyAlbum = em.merge(album);
 		Song copySong = em.merge(song);
 			
+	}
+
+	@Override
+	public int getNumberOfSongs(String artistName) {
+		Artist artist = getArtist(artistName);
+		int numberMusics = 0;
+		for (Album album : artist.getAlbums()) {
+			for (Song song : album.getSongs()) {
+				numberMusics++;
+			}
+		}
+		return numberMusics;
 	}
 	
 	

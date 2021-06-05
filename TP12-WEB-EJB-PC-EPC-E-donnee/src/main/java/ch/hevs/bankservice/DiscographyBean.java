@@ -81,30 +81,18 @@ public class DiscographyBean implements Discography{
 	public void addSongToAlbum(Song song, Album album) {
 		album.addSong(song);
 		Album copyAlbum = em.merge(album);
-		Song copySong = em.merge(song);
 			
 	}
 
 	@Override
-	public int getNumberOfSongs(String artistName) {
+	public int getNumberOfSongs(Artist artist) {
 		
-		//Query query = em.createQuery("SELECT count(s) from Artist a, Album al, IN(al.songs) s WHERE a.stageName=:artistName AND a.name =:albumName AND al.id = a.id ).setParameter("artistName", artistName);
-		
-		Artist artist = getArtist(artistName);
-		int numberMusics = 0;
-		for (Album album : artist.getAlbums()) {
-			for (Song song : album.getSongs()) {
-				numberMusics++;
-			}
-		}
-		return numberMusics;
+		return Math.toIntExact((long) em.createQuery("SELECT DISTINCT COUNT(s.id) FROM Artist a, IN(a.albums) al, IN(al.songs) s WHERE a.id =:id").setParameter("id", artist.getId()).getSingleResult());
 	}
 
 	@Override
 	public void deleteArtist(Artist artist) {
-		
-		//return (Artist) em.createQuery("FROM Artist a where a.stageName=:artistName").setParameter("artistName", artistName).getSingleResult();
-		
+				
 		Query query = em.createQuery("DELETE FROM Artist a WHERE a.id = :artist_id");
 		query.setParameter("artist_id", artist.getId()).executeUpdate();
 		
@@ -117,7 +105,6 @@ public class DiscographyBean implements Discography{
 		query.setParameter("song_id", song.getId());
 		query.executeUpdate();
 		
-		//Album copyAlbum = em.merge(album);
 	}
 	
 	@Override
@@ -130,8 +117,6 @@ public class DiscographyBean implements Discography{
 		Query query = em.createQuery("DELETE FROM Album a WHERE a.id =:album_id");
 		query.setParameter("album_id", album.getId());
 		query.executeUpdate();
-		
-		Artist copyArtist = em.merge(artist);
 	
 	}
 

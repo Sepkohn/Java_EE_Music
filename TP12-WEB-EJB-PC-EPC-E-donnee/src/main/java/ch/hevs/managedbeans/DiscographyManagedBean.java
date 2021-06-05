@@ -1,5 +1,6 @@
 package ch.hevs.managedbeans;
 
+import java.awt.Window;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -127,7 +128,7 @@ public class DiscographyManagedBean {
 		if(artist == null) {
 			this.artist = artists.get(0);
 		}
-		//this.sourceArtistName = artist.getStageName();
+
 		albumList();
 	}
 	private void albumList() {
@@ -169,7 +170,7 @@ public class DiscographyManagedBean {
 	 
 	
 	public int getNumberOfSongs() {
-		return disco.getNumberOfSongs(this.artist.getStageName());
+		return disco.getNumberOfSongs(this.artist);
 	}
 	
 	
@@ -234,6 +235,10 @@ public class DiscographyManagedBean {
 		return "showAddingResult";
 	}
 	
+	public void typeChange(ValueChangeEvent e) {
+		this.artistType = e.getNewValue().toString();
+	}
+	
 	private void clearInputs() {
 		this.newArtistName = null;
 		this.newGenre = null;
@@ -241,7 +246,7 @@ public class DiscographyManagedBean {
 		this.duration = 0;
 		this.year = 0;
 		this.label = null;
-		this.artistType = null;	
+		this.artistType = "Singer";	
 		this.address = new Address();
 		this.newArtistFirstname = null;
 		this.newArtistLastname = null;
@@ -272,7 +277,6 @@ public class DiscographyManagedBean {
 	
 		disco.deleteSongToAlbum(this.song, this.album);
 
-	
 		songList();
 		clearInputs();
 		this.addingResult = "Delete Song";

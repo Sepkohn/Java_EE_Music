@@ -8,11 +8,11 @@
 
 <ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
     <ui:define name="content">
-        <h:outputLabel value="Transfer result:"></h:outputLabel><h:outputLabel value=" #{transferBean.transactionResult}"></h:outputLabel>
+        <h:outputLabel value="Transfer result:"></h:outputLabel><h:outputLabel value="#{DiscographyManagedBean.addingResult}"></h:outputLabel>
         <br></br>
         <h:form>
-        <h:commandLink action="transferForm">
-         <h:outputText value="Make another transfer" />
+        <h:commandLink action="welcomeArtist">
+         <h:outputText value="Back to Artist" />
         </h:commandLink>
         </h:form>
     </ui:define>

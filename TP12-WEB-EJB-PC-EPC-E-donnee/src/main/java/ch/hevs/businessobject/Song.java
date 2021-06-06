@@ -4,15 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Inheritance;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 
 @Entity
 @Inheritance
 public class Song extends Music{
 	
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
 	private List<Album> albums;
 
 	public List<Album> getAlbums() {
@@ -25,7 +25,7 @@ public class Song extends Music{
 	
 	public Song(String name, int duration, int year) {
 		super(name, duration, year);
-		// TODO Auto-generated constructor stub
+		
 		this.albums = new ArrayList<Album>();
 	}
 	public Song() {

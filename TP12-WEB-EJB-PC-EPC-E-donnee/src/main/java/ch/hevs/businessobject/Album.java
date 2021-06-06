@@ -44,7 +44,7 @@ public class Album extends Music{
 	
 	public Album(String name, int year, String label) {
 		super(name, 0, year);
-		// TODO Auto-generated constructor stub
+
 		this.label = label;
 		this.songs = new ArrayList<Song>();
 	}

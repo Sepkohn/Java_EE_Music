@@ -2,19 +2,16 @@ package ch.hevs.bankservice;
 
 import java.util.List;
 
-import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import ch.hevs.businessobject.Album;
 import ch.hevs.businessobject.Artist;
 import ch.hevs.businessobject.Song;
 
-import javax.persistence.Query;
-
 @Stateless
-//@RolesAllowed(value = {"visitor", "admin"})
 public class DiscographyBean implements Discography{
 
 	@PersistenceContext(name = "DiscoPU")
@@ -22,7 +19,7 @@ public class DiscographyBean implements Discography{
 	
 	
 	public List<Artist> getArtists() {
-		return em.createQuery("FROM Artist").getResultList();
+		return (List<Artist>) em.createQuery("FROM Artist").getResultList();
 	}
 
 	@Override
@@ -38,31 +35,37 @@ public class DiscographyBean implements Discography{
 	
 	
 	@Override
-	public List<Album> getAlbums(String artistName) {
-		return (List<Album>)em.createQuery("SELECT al FROM Album al, Artist a WHERE al.artist.id = a.id AND a.stageName=:artistName").setParameter("artistName", artistName).getResultList();
+	public List<Album> getAlbums(Artist artist) {
+		return (List<Album>)em.createQuery("FROM Album WHERE artist.id =:id").setParameter("id", artist.getId()).getResultList();
 	}
 
 	@Override
-	public Album getAlbum(String albumName, String artistName) {
-		Query query = em.createQuery("SELECT a FROM Album a, Artist ar where a.name=:albumName AND ar.stageName=:artistName AND a.artist.id = ar.id");
+	public Album getAlbum(String albumName, Artist artist) {
+		Query query = em.createQuery("SELECT a FROM Album a, Artist ar where a.name=:albumName AND a.artist.id =:id");
 		query.setParameter("albumName", albumName);
-		query.setParameter("artistName", artistName);
+		query.setParameter("id", artist.getId());
 		return (Album) query.getSingleResult();
 	}
 
 	@Override
-	public List<Song> getSongsFromAlbum(String albumName, String artistName) {
-		Query query = em.createQuery("SELECT s FROM Artist ar, Album a, IN(a.songs) s where a.name=:albumName AND ar.stageName=:artistName AND a.artist.id = ar.id");
-		query.setParameter("albumName", albumName);
-		query.setParameter("artistName", artistName);
+	public List<Song> getSongsFromAlbum(Album album, Artist artist) {
+		Query query = em.createQuery("SELECT s FROM Artist ar, IN(ar.albums) a, IN(a.songs) s where a.id=:albumId AND a.artist.id =:artistId");
+		query.setParameter("albumId", album.getId());
+		query.setParameter("artistId", artist.getId());
 		return (List<Song>) query.getResultList();
 	}
 
 	@Override
-	public Song getSong(String songName, String albumName) {
-		Query query = em.createQuery("SELECT s FROM Song s, Album a, IN(s.albums) al where s.name =:songName AND a.name =:albumName AND al.id = a.id");
+	public Song getSong(String songName, Album album) {
+		Query query = em.createQuery("SELECT s FROM Song s, Album a, IN(s.albums) al where s.name =:songName AND al.id =:id");
 		query.setParameter("songName", songName);
-		query.setParameter("albumName", albumName);
+		query.setParameter("id", album.getId());
+		return (Song) query.getSingleResult();
+	}
+	
+	public Song getSong(String songName) {
+		Query query = em.createQuery("SELECT DISTINCT s FROM Song s where s.name =:songName");
+		query.setParameter("songName", songName);
 		return (Song) query.getSingleResult();
 	}
 
@@ -85,23 +88,27 @@ public class DiscographyBean implements Discography{
 	}
 
 	@Override
-	public int getNumberOfSongs(Artist artist) {
-		
+	public int getNumberOfSongs(Artist artist) {	
 		return Math.toIntExact((long) em.createQuery("SELECT DISTINCT COUNT(s.id) FROM Artist a, IN(a.albums) al, IN(al.songs) s WHERE a.id =:id").setParameter("id", artist.getId()).getSingleResult());
 	}
 
 	@Override
 	public void deleteArtist(Artist artist) {
-				
-		Query query = em.createQuery("DELETE FROM Artist a WHERE a.id = :artist_id");
-		query.setParameter("artist_id", artist.getId()).executeUpdate();
+	
+		for(Album a : artist.getAlbums()) {
+			deleteAlbum(a, artist);
+		}
 		
+		Query query = em.createQuery("DELETE FROM Artist a WHERE a.id =:artist_id");
+		query.setParameter("artist_id", artist.getId());
+		query.executeUpdate();
+		em.detach(artist);
 	}
 
 	@Override
 	public void deleteSongToAlbum(Song song, Album album) {
-		album.removeSong(song);
-		Query query = em.createQuery("DELETE FROM Song s WHERE s.id = :song_id");
+
+		Query query = em.createQuery("DELETE FROM Song s WHERE s.id =:song_id");
 		query.setParameter("song_id", song.getId());
 		query.executeUpdate();
 		
@@ -111,13 +118,21 @@ public class DiscographyBean implements Discography{
 	public void deleteAlbum(Album album, Artist artist) {
 
 		for(Song s : album.getSongs()) {
-			album.removeSong(s);
+			deleteSongToAlbum(s, album);
 		}
-		artist.removeAlbum(album);
+		
 		Query query = em.createQuery("DELETE FROM Album a WHERE a.id =:album_id");
 		query.setParameter("album_id", album.getId());
 		query.executeUpdate();
 	
+	}
+
+	@Override
+	public List<Song> getSongsFromArtist(Artist artist, Album album) {
+		Query query = em.createQuery("SELECT DISTINCT s FROM Artist a, IN(a.albums) al, IN(al.songs) s WHERE a.id =:artistId AND al.id !=:albumId");
+		query.setParameter("artistId", artist.getId());
+		query.setParameter("albumId", album.getId());
+		return (List<Song>) query.getResultList();
 	}
 
 

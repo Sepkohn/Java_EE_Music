@@ -3,6 +3,7 @@ package ch.hevs.businessobject;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Inheritance;
@@ -26,7 +27,7 @@ public class Song extends Music{
 	
 	public Song(String name, int duration, int year) {
 		super(name, duration, year);
-		// TODO Auto-generated constructor stub
+		
 		this.albums = new ArrayList<Album>();
 	}
 	public Song() {

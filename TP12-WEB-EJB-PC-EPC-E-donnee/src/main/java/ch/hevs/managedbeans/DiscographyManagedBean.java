@@ -29,8 +29,12 @@ public class DiscographyManagedBean {
 	private List<String> songNames;
 	private List<String> existingSongNames;
 	private List<Song> existingSongs;
+	
+	//get lengths
+	private boolean artistLength;
 	private boolean albumLength;
 	private boolean songLength;
+	private boolean existingSongsLength;
 	
 	private Artist artist;
 	private Album album;
@@ -70,12 +74,11 @@ public class DiscographyManagedBean {
 	    	InitialContext ctx = new InitialContext();
 			disco = (Discography) ctx.lookup("java:global/TP12-WEB-EJB-PC-EPC-E-0.0.1-SNAPSHOT/DiscographyBean!ch.hevs.bankservice.Discography");    	
 			
-			
-	    	// get clients
-			artistList();
-	
 			//Pour vider les champs lorsque l'on retourne sur une page
 			clearInputs();
+			
+			// get clients
+			artistList();
 			
 	    }
 
@@ -133,11 +136,10 @@ public class DiscographyManagedBean {
 		for (Artist artist : artists) {
 			this.artistNames.add(artist.getStageName());
 		}
-		if(artist == null) {
-			this.artist = artists.get(0);
+		if(!artists.isEmpty()) {
+			this.artist = artists.get(0);		
+			albumList();
 		}
-
-		albumList();
 	}
 	private void albumList() {
 		
@@ -298,13 +300,14 @@ public class DiscographyManagedBean {
 	
 	public String deleteArtist() {
 	
-		
-		
-	disco.deleteArtist(this.artist);
+	Artist artist = disco.getArtist(this.artist.getStageName());
+	disco.deleteArtist(artist);
 	System.out.println(artist.getId());
-	artistList();
+	
 	
 	clearInputs();
+	
+	artistList();
 	
 	this.addingResult = "Delete Artiste";
 	
@@ -316,8 +319,10 @@ public class DiscographyManagedBean {
 	
 		disco.deleteSongToAlbum(this.song, this.album);
 
-		songList();
+		
 		clearInputs();
+		
+		songList();
 		this.addingResult = "Delete Song";
 	
 		return "showAddingResult";
@@ -326,9 +331,11 @@ public class DiscographyManagedBean {
 	public String deleteAlbum() {
 		
 		disco.deleteAlbum(this.album, this.artist);
-
-		albumList();
+		
 		clearInputs();
+		
+		albumList();
+		
 		this.addingResult = "Delete Album";
 	
 		return "showAddingResult";
@@ -458,6 +465,14 @@ public class DiscographyManagedBean {
 
 	public void setExistingSong(Song existingSong) {
 		this.existingSong = existingSong;
+	}
+	
+	public boolean getArtistLength() {
+		return !this.artistNames.isEmpty();	
+	}
+	
+	public boolean getExistingSongLength() {
+		return !this.existingSongNames.isEmpty();	
 	}
 	
 	

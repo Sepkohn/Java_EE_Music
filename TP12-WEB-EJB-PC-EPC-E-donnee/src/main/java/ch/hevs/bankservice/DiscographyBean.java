@@ -13,6 +13,9 @@ import ch.hevs.businessobject.Song;
 
 import javax.persistence.Query;
 
+import org.eclipse.persistence.annotations.CascadeOnDelete;
+import org.eclipse.persistence.annotations.DeleteAll;
+
 @Stateless
 //@RolesAllowed(value = {"visitor", "admin"})
 public class DiscographyBean implements Discography{
@@ -98,16 +101,21 @@ public class DiscographyBean implements Discography{
 
 	@Override
 	public void deleteArtist(Artist artist) {
-				
-		Query query = em.createQuery("DELETE FROM Artist a WHERE a.id = :artist_id");
-		query.setParameter("artist_id", artist.getId()).executeUpdate();
+	
+		for(Album a : artist.getAlbums()) {
+			deleteAlbum(a, artist);
+		}
 		
+		Query query = em.createQuery("DELETE FROM Artist a WHERE a.id =:artist_id");
+		query.setParameter("artist_id", artist.getId());
+		query.executeUpdate();
+		em.detach(artist);
 	}
 
 	@Override
 	public void deleteSongToAlbum(Song song, Album album) {
-		album.removeSong(song);
-		Query query = em.createQuery("DELETE FROM Song s WHERE s.id = :song_id");
+
+		Query query = em.createQuery("DELETE FROM Song s WHERE s.id =:song_id");
 		query.setParameter("song_id", song.getId());
 		query.executeUpdate();
 		
@@ -117,9 +125,9 @@ public class DiscographyBean implements Discography{
 	public void deleteAlbum(Album album, Artist artist) {
 
 		for(Song s : album.getSongs()) {
-			album.removeSong(s);
+			deleteSongToAlbum(s, album);
 		}
-		artist.removeAlbum(album);
+		
 		Query query = em.createQuery("DELETE FROM Album a WHERE a.id =:album_id");
 		query.setParameter("album_id", album.getId());
 		query.executeUpdate();

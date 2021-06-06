@@ -14,22 +14,13 @@ import javax.persistence.ManyToOne;
 @Inheritance
 public class Band extends Artist{
 
-	@ManyToMany
-	private List<BandMember> members;
-	
 	public Band(String stageName, String genre) {
 		super(stageName, genre);
 		// TODO Auto-generated constructor stub
-		this.members = new ArrayList<BandMember>();
 	}
 	
 	public Band() {
 		
-	}
-	
-	public void addMember(BandMember member) {
-		member.addBand(this);
-		this.members.add(member);
-	}
+	}	
 	
 }

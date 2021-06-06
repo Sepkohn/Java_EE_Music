@@ -1,19 +1,16 @@
 package ch.hevs.managedbeans;
 
-import java.awt.Window;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.ejb.Stateful;
+
 import javax.ejb.Stateless;
 import javax.faces.event.ValueChangeEvent;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
-import ch.hevs.bankservice.Bank;
 import ch.hevs.bankservice.Discography;
-import ch.hevs.businessobject.Account;
 import ch.hevs.businessobject.Address;
 import ch.hevs.businessobject.Album;
 import ch.hevs.businessobject.Artist;
@@ -24,6 +21,7 @@ import ch.hevs.businessobject.Song;
 @Stateless
 public class DiscographyManagedBean {
 	
+	//variable name
 	private List<String> artistNames;
 	private List<String> albumNames;
 	private List<String> songNames;
@@ -41,7 +39,7 @@ public class DiscographyManagedBean {
 	private Song song;
 	private Song existingSong;
 	
-	//Ajout Artist 
+	//Add artist 
 	private String newArtistName;
 	private String newGenre;
 	private String artistType;
@@ -50,27 +48,27 @@ public class DiscographyManagedBean {
 	
 	private Address address;
 	
-	//Ajout Album
+	//Add Album
 	private String nameMusic;
 	private int duration;
 	private int year;
 	private String label;
 	
+	//Operation result
 	private String addingResult;
 	
+	//tests on artist
 	private int numberOfSongs;
 	private boolean isSinger;
 	
-	
+	//Bean
 	private Discography disco;
 	
 
-	
-	
 	 @PostConstruct
 	    public void initialize() throws NamingException {
 	    	
-	    	// use JNDI to inject reference to bank EJB
+	    	// use JNDI to inject reference
 	    	InitialContext ctx = new InitialContext();
 			disco = (Discography) ctx.lookup("java:global/TP12-WEB-EJB-PC-EPC-E-0.0.1-SNAPSHOT/DiscographyBean!ch.hevs.bankservice.Discography");    	
 			
@@ -219,9 +217,9 @@ public class DiscographyManagedBean {
 		
 		clearInputs();
 		
-		this.addingResult = "Artist";
+		this.addingResult = "Artist added";
 		
-		return "showAddingResult";
+		return "showResult";
 	}
 	
 	public String addAlbum() {
@@ -235,9 +233,9 @@ public class DiscographyManagedBean {
 		
 		clearInputs();
 		
-		this.addingResult = "Album";
+		this.addingResult = "Album added";
 		
-		return "showAddingResult";
+		return "showResult";
 	}
 	
 	public String addSong() {
@@ -253,9 +251,9 @@ public class DiscographyManagedBean {
 		
 		clearInputs();
 		
-		this.addingResult = "Song";
+		this.addingResult = "Song added";
 		
-		return "showAddingResult";
+		return "showResult";
 	}
 	
 	public String addExistingSong() {
@@ -271,9 +269,9 @@ public class DiscographyManagedBean {
 		
 		clearInputs();
 		
-		this.addingResult = "Existing Song";
+		this.addingResult = "Existing Song added";
 		
-		return "showAddingResult";
+		return "showResult";
 	}
 	
 	public void typeChange(ValueChangeEvent e) {
@@ -309,9 +307,9 @@ public class DiscographyManagedBean {
 	
 	artistList();
 	
-	this.addingResult = "Delete Artiste";
+	this.addingResult = "Artist deleted";
 	
-	return "showAddingResult";
+	return "showResult";
 	}
 
 	
@@ -323,9 +321,9 @@ public class DiscographyManagedBean {
 		clearInputs();
 		
 		songList();
-		this.addingResult = "Delete Song";
+		this.addingResult = "Song deleted";
 	
-		return "showAddingResult";
+		return "showResult";
 	}
 	
 	public String deleteAlbum() {
@@ -336,18 +334,17 @@ public class DiscographyManagedBean {
 		
 		albumList();
 		
-		this.addingResult = "Delete Album";
+		this.addingResult = "Album deleted";
 	
-		return "showAddingResult";
+		return "showResult";
 	}
+	
 	
 	//Getter Setter
 
 	public String getNewArtistName() {
 		return newArtistName;
 	}
-
-
 	public void setNewArtistName(String newArtistName) {
 		this.newArtistName = newArtistName;
 	}
@@ -356,8 +353,6 @@ public class DiscographyManagedBean {
 	public String getNewGenre() {
 		return newGenre;
 	}
-
-
 	public void setNewGenre(String newGenre) {
 		this.newGenre = newGenre;
 	}
@@ -367,16 +362,14 @@ public class DiscographyManagedBean {
 	public String getNameMusic() {
 		return nameMusic;
 	}
-
-
 	public void setNameMusic(String nameAlbum) {
 		this.nameMusic = nameAlbum;
 	}
+	
+	
 	public int getDuration() {
 		return duration;
 	}
-
-
 	public void setDuration(int duration) {
 		this.duration = duration;
 	}
@@ -385,8 +378,6 @@ public class DiscographyManagedBean {
 	public int getYear() {
 		return year;
 	}
-
-
 	public void setYear(int year) {
 		this.year = year;
 	}
@@ -395,8 +386,6 @@ public class DiscographyManagedBean {
 	public String getLabel() {
 		return label;
 	}
-
-
 	public void setLabel(String label) {
 		this.label = label;
 	}
@@ -407,18 +396,10 @@ public class DiscographyManagedBean {
 	}
 
 
-	public void setArtistType(String artistType) {
-		this.artistType = artistType;
-	}
-
-
 	public String getAddingResult() {
 		return addingResult;
 	}
 
-	public void setAddingResult(String addingResult) {
-		this.addingResult = addingResult;
-	}
 	
 	public Artist getArtist() {
 		return artist;
@@ -442,15 +423,14 @@ public class DiscographyManagedBean {
 	public String getNewArtistFirstname() {
 		return newArtistFirstname;
 	}
+	public void setNewArtistFirstname(String newArtistFirstname) {
+		this.newArtistFirstname = newArtistFirstname;
+	}
+	
 
 	public String getNewArtistLastname() {
 		return newArtistLastname;
 	}
-
-	public void setNewArtistFirstname(String newArtistFirstname) {
-		this.newArtistFirstname = newArtistFirstname;
-	}
-
 	public void setNewArtistLastname(String newArtistLastname) {
 		this.newArtistLastname = newArtistLastname;
 	}
@@ -461,10 +441,6 @@ public class DiscographyManagedBean {
 
 	public Song getExistingSong() {
 		return existingSong;
-	}
-
-	public void setExistingSong(Song existingSong) {
-		this.existingSong = existingSong;
 	}
 	
 	public boolean getArtistLength() {

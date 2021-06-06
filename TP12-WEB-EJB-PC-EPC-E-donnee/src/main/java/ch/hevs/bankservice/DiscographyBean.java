@@ -2,22 +2,16 @@ package ch.hevs.bankservice;
 
 import java.util.List;
 
-import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import ch.hevs.businessobject.Album;
 import ch.hevs.businessobject.Artist;
 import ch.hevs.businessobject.Song;
 
-import javax.persistence.Query;
-
-import org.eclipse.persistence.annotations.CascadeOnDelete;
-import org.eclipse.persistence.annotations.DeleteAll;
-
 @Stateless
-//@RolesAllowed(value = {"visitor", "admin"})
 public class DiscographyBean implements Discography{
 
 	@PersistenceContext(name = "DiscoPU")
@@ -25,7 +19,7 @@ public class DiscographyBean implements Discography{
 	
 	
 	public List<Artist> getArtists() {
-		return em.createQuery("FROM Artist").getResultList();
+		return (List<Artist>) em.createQuery("FROM Artist").getResultList();
 	}
 
 	@Override
@@ -94,8 +88,7 @@ public class DiscographyBean implements Discography{
 	}
 
 	@Override
-	public int getNumberOfSongs(Artist artist) {
-		
+	public int getNumberOfSongs(Artist artist) {	
 		return Math.toIntExact((long) em.createQuery("SELECT DISTINCT COUNT(s.id) FROM Artist a, IN(a.albums) al, IN(al.songs) s WHERE a.id =:id").setParameter("id", artist.getId()).getSingleResult());
 	}
 

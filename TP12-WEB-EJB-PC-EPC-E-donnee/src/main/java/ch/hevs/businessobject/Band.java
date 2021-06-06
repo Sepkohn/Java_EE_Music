@@ -1,14 +1,7 @@
 package ch.hevs.businessobject;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 
 @Entity
 @Inheritance

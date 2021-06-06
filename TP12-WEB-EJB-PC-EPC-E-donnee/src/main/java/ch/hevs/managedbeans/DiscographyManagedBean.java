@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-
 import javax.ejb.Stateless;
 import javax.faces.event.ValueChangeEvent;
 import javax.naming.InitialContext;
@@ -72,7 +71,7 @@ public class DiscographyManagedBean {
 	    	InitialContext ctx = new InitialContext();
 			disco = (Discography) ctx.lookup("java:global/TP12-WEB-EJB-PC-EPC-E-0.0.1-SNAPSHOT/DiscographyBean!ch.hevs.bankservice.Discography");    	
 			
-			//Pour vider les champs lorsque l'on retourne sur une page
+			//variavbles initaîalization
 			clearInputs();
 			
 			// get clients
@@ -80,35 +79,15 @@ public class DiscographyManagedBean {
 			
 	    }
 
-	public List<String> getArtistNames() {
-		return artistNames;
-	}
-	public void setArtistNames(List<String> artistNames) {
-		this.artistNames = artistNames;
-	}
-	
-	public List<String> getAlbumNames() {
-		return albumNames;
-	}
-	public void setAlbumNames(List<String> albumNames) {
-		this.albumNames = albumNames;
-	}
 
-
-	public List<String> getSongNames() {
-		return songNames;
-	}
-	public void setSongNames(List<String> songNames) {
-		this.songNames = songNames;
-	}
-
+	//Update an artist and his musics when selected in the scrolling menu
 	public void updateSourceArtist(ValueChangeEvent event) {
     	String sourceArtistName = (String)event.getNewValue();
     	this.artist = disco.getArtist(sourceArtistName);
     	albumList();
-    	songList();
     }
 	
+	//Update an album and its musics when selected in the scrolling menu
 	public void updateSourceAlbum(ValueChangeEvent event) {
     	String sourceAlbumName = (String)event.getNewValue();
     	this.album = disco.getAlbum(sourceAlbumName, this.artist);
@@ -116,17 +95,20 @@ public class DiscographyManagedBean {
     	songList();
     }
 	
+	//Update a song when selected in the scrolling menu
 	public void updateSourceSong(ValueChangeEvent event) {
     	String sourceSongName = (String)event.getNewValue();
     	this.song = disco.getSong(sourceSongName, this.album);
     }
 	
+	//Update a song of an artist when selected in the scrolling Menu
 	public void updateExistingSong(ValueChangeEvent event) {
     	String sourceSongName = (String)event.getNewValue();
     	this.song = disco.getSong(sourceSongName);
     }
 	
 	
+	//Get all artists in database and set the first result as default
 	private void artistList() {
 		List<Artist> artists = disco.getArtists();
 		
@@ -139,6 +121,8 @@ public class DiscographyManagedBean {
 			albumList();
 		}
 	}
+	
+	//Get all albums from an artist in database and set the first result as default
 	private void albumList() {
 		
 		List<Album> albums = disco.getAlbums(this.artist);
@@ -153,6 +137,7 @@ public class DiscographyManagedBean {
 		
 	}
 	
+	//Get all songs of an album in database and set the first result as default
 	private void songList() {
 		List<Song> songs = disco.getSongsFromAlbum(this.album, this.artist);
 	    this.songNames = new ArrayList<String>();
@@ -165,6 +150,7 @@ public class DiscographyManagedBean {
 		existingSongList();
 	}
 	
+	//Get all songs from an artist, except those from actual album in database and set the first result as default
 	private void existingSongList() {
 		this.existingSongs = disco.getSongsFromArtist(this.artist,  this.album);
 		this.existingSongNames = new ArrayList<String>();
@@ -177,26 +163,61 @@ public class DiscographyManagedBean {
 	}
 	
 	
-	
-	public String toAlbums() {	
-		return "welcomeAlbum";
+	//reinitialize the main variables
+	private void clearInputs() {
+		this.newArtistName = null;
+		this.newGenre = null;
+		this.nameMusic = null;
+		this.duration = 0;
+		this.year = 0;
+		this.label = null;
+		this.artistType = "Singer";	
+		this.address = new Address();
+		this.newArtistFirstname = null;
+		this.newArtistLastname = null;
 	}
 	
-	public boolean getAlbumlength() {
-			return !this.albumNames.isEmpty();
-	}
-	
-	public boolean getSonglength() {
-		return !this.songNames.isEmpty();
-}
-	 
-	
+	//calculate the number of songs that have an artist
 	public int getNumberOfSongs() {
 		return disco.getNumberOfSongs(this.artist);
 	}
 	
+	//set the artistType with radio button
+	public void typeChange(ValueChangeEvent e) {
+		this.artistType = e.getNewValue().toString();
+	}
 	
+	
+	//TESTS------------------------------------------------------------------
+	
+	//return if there is an album in the list
+	public boolean getAlbumlength() {
+			return !this.albumNames.isEmpty();
+	}
+	
+	//return if there is a song in the list
+	public boolean getSonglength() {
+		return !this.songNames.isEmpty();
+	}
+	
+	//return if there is an artist in the list
+	public boolean getArtistLength() {
+		return !this.artistNames.isEmpty();	
+	}
+	
+	//return if there is a song in the list
+	public boolean getExistingSongLength() {
+		return !this.existingSongNames.isEmpty();	
+	}
+	
+	//return if the artist is a singer
+		public boolean getIsSinger() {
+			return this.artist.getClass().equals(Singer.class);
+		}
+
 	//ADDING -------------------------------------------------
+	
+	//Add an artist to database
 	public String addArtist() {
 		
 		Artist artist;
@@ -222,6 +243,7 @@ public class DiscographyManagedBean {
 		return "showResult";
 	}
 	
+	//Add an album to database
 	public String addAlbum() {
 
 		Album album = new Album(nameMusic, year, label);
@@ -238,6 +260,7 @@ public class DiscographyManagedBean {
 		return "showResult";
 	}
 	
+	//Add a song to database
 	public String addSong() {
 
 		Song song = new Song(nameMusic, duration, album.getYear());
@@ -256,6 +279,7 @@ public class DiscographyManagedBean {
 		return "showResult";
 	}
 	
+	//Update an existing song to database
 	public String addExistingSong() {
 		
 		Song song = disco.getSong(this.existingSong.getName());
@@ -273,29 +297,11 @@ public class DiscographyManagedBean {
 		
 		return "showResult";
 	}
+
 	
-	public void typeChange(ValueChangeEvent e) {
-		this.artistType = e.getNewValue().toString();
-	}
+	//DELETING--------------------------------------
 	
-	private void clearInputs() {
-		this.newArtistName = null;
-		this.newGenre = null;
-		this.nameMusic = null;
-		this.duration = 0;
-		this.year = 0;
-		this.label = null;
-		this.artistType = "Singer";	
-		this.address = new Address();
-		this.newArtistFirstname = null;
-		this.newArtistLastname = null;
-	}
-	
-	public boolean getIsSinger() {
-		return this.artist.getClass().equals(Singer.class);
-	}
-	//--------------------------------------
-	
+	//Delete an artist an his musics from database
 	public String deleteArtist() {
 	
 	Artist artist = disco.getArtist(this.artist.getStageName());
@@ -313,6 +319,7 @@ public class DiscographyManagedBean {
 	}
 
 	
+	//Delete a song from the database
 	public String deleteSong() {
 	
 		disco.deleteSongToAlbum(this.song, this.album);
@@ -326,6 +333,7 @@ public class DiscographyManagedBean {
 		return "showResult";
 	}
 	
+	//Delete an album an its musics from database
 	public String deleteAlbum() {
 		
 		disco.deleteAlbum(this.album, this.artist);
@@ -340,8 +348,23 @@ public class DiscographyManagedBean {
 	}
 	
 	
-	//Getter Setter
+	//GETTER AND SETTER-----------------------------------------------------
+	
+	public List<String> getArtistNames() {
+		return artistNames;
+	}
 
+	
+	public List<String> getAlbumNames() {
+		return albumNames;
+	}
+
+	
+	public List<String> getSongNames() {
+		return songNames;
+	}
+
+	
 	public String getNewArtistName() {
 		return newArtistName;
 	}
@@ -394,6 +417,9 @@ public class DiscographyManagedBean {
 	public String getArtistType() {
 		return artistType;
 	}
+	public void setArtistType(String type) {
+		this.artistType = type;
+	}
 
 
 	public String getAddingResult() {
@@ -443,14 +469,7 @@ public class DiscographyManagedBean {
 		return existingSong;
 	}
 	
-	public boolean getArtistLength() {
-		return !this.artistNames.isEmpty();	
-	}
-	
-	public boolean getExistingSongLength() {
-		return !this.existingSongNames.isEmpty();	
-	}
-	
+
 	
 	
 	

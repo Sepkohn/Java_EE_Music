@@ -15,13 +15,15 @@ public interface Discography {
 	
 	Artist getArtist(Long id);
 	Artist getArtist(String artistName);
-	List<Album> getAlbums(String artistName);
+	List<Album> getAlbums(Artist artist);
 	
-	Album getAlbum(String albumName, String artistName);
+	Album getAlbum(String albumName, Artist artist);
 	
-	List<Song> getSongsFromAlbum(String albumName, String artistName);
+	List<Song> getSongsFromAlbum(Album album, Artist artist);
+	List<Song> getSongsFromArtist(Artist artist, Album album);
 	
-	Song getSong(String songName, String albumName);
+	Song getSong(String songName, Album album);
+	Song getSong(String songName);
 	
 	void addArtist(Artist artist);
 	void addAlbum(Album album, Artist artist);

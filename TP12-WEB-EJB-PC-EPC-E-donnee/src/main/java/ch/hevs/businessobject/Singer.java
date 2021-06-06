@@ -1,7 +1,5 @@
 package ch.hevs.businessobject;
 
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 
@@ -27,9 +25,11 @@ public class Singer extends Artist{
 		this.realFirstname = realFirstname;
 	}
 	
-	public Singer(String stageName, String genre) {
+	public Singer(String stageName, String genre, String realName, String realFirstname) {
 		super(stageName, genre);
 		// TODO Auto-generated constructor stub
+		this.realName = realName;
+		this.realFirstname = realFirstname;
 	}
 	public Singer() {
 		

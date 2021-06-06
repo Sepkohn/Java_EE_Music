@@ -27,12 +27,15 @@ public class DiscographyManagedBean {
 	private List<String> artistNames;
 	private List<String> albumNames;
 	private List<String> songNames;
+	private List<String> existingSongNames;
+	private List<Song> existingSongs;
 	private boolean albumLength;
 	private boolean songLength;
 	
 	private Artist artist;
 	private Album album;
 	private Song song;
+	private Song existingSong;
 	
 	//Ajout Artist 
 	private String newArtistName;
@@ -107,14 +110,19 @@ public class DiscographyManagedBean {
 	
 	public void updateSourceAlbum(ValueChangeEvent event) {
     	String sourceAlbumName = (String)event.getNewValue();
-    	this.album = disco.getAlbum(sourceAlbumName, this.artist.getStageName());
+    	this.album = disco.getAlbum(sourceAlbumName, this.artist);
     	
     	songList();
     }
 	
 	public void updateSourceSong(ValueChangeEvent event) {
     	String sourceSongName = (String)event.getNewValue();
-    	this.song = disco.getSong(sourceSongName, this.album.getName());
+    	this.song = disco.getSong(sourceSongName, this.album);
+    }
+	
+	public void updateExistingSong(ValueChangeEvent event) {
+    	String sourceSongName = (String)event.getNewValue();
+    	this.song = disco.getSong(sourceSongName);
     }
 	
 	
@@ -133,7 +141,7 @@ public class DiscographyManagedBean {
 	}
 	private void albumList() {
 		
-		List<Album> albums = disco.getAlbums(this.artist.getStageName());
+		List<Album> albums = disco.getAlbums(this.artist);
 	    this.albumNames = new ArrayList<String>();
 		for (Album album : albums) {
 			this.albumNames.add(album.getName());
@@ -146,7 +154,7 @@ public class DiscographyManagedBean {
 	}
 	
 	private void songList() {
-		List<Song> songs = disco.getSongsFromAlbum(this.album.getName(), this.artist.getStageName());
+		List<Song> songs = disco.getSongsFromAlbum(this.album, this.artist);
 	    this.songNames = new ArrayList<String>();
 		for (Song song : songs) {
 			this.songNames.add(song.getName());
@@ -154,7 +162,21 @@ public class DiscographyManagedBean {
 		if(!songNames.isEmpty()) {
 			this.song = songs.get(0);
 		}
+		existingSongList();
 	}
+	
+	private void existingSongList() {
+		this.existingSongs = disco.getSongsFromArtist(this.artist,  this.album);
+		this.existingSongNames = new ArrayList<String>();
+		for (Song song : existingSongs) {
+			this.existingSongNames.add(song.getName());
+		}
+		if(!existingSongs.isEmpty()) {
+			this.existingSong = existingSongs.get(0);
+		}
+	}
+	
+	
 	
 	public String toAlbums() {	
 		return "welcomeAlbum";
@@ -180,7 +202,7 @@ public class DiscographyManagedBean {
 		Artist artist;
 		switch(this.artistType) {
 		case("Singer"):
-			artist = new Singer(newArtistName, newGenre);
+			artist = new Singer(newArtistName, newGenre, newArtistLastname, newArtistFirstname);	
 			break;
 		case("Band"):
 			artist = new Band(newArtistName, newGenre);
@@ -189,7 +211,6 @@ public class DiscographyManagedBean {
 			artist = new Artist();
 		}
 		artist.setAddress(this.address);
-		
 		disco.addArtist(artist);
 		
 		artistList();
@@ -204,9 +225,9 @@ public class DiscographyManagedBean {
 	public String addAlbum() {
 
 		Album album = new Album(nameMusic, year, label);
-		//Artist artist = disco.getArtist(sourceArtistName);
+		Artist artist = disco.getArtist(this.artist.getId());
 
-		disco.addAlbum(album, this.artist);
+		disco.addAlbum(album, artist);
 		
 		albumList();
 		
@@ -220,7 +241,7 @@ public class DiscographyManagedBean {
 	public String addSong() {
 
 		Song song = new Song(nameMusic, duration, album.getYear());
-		Album album = disco.getAlbum(this.album.getName(), this.artist.getStageName());
+		Album album = disco.getAlbum(this.album.getName(), this.artist);
 		album.setDuration(album.getDuration()+duration);
 		song.addAlbum(album);
 
@@ -231,6 +252,24 @@ public class DiscographyManagedBean {
 		clearInputs();
 		
 		this.addingResult = "Song";
+		
+		return "showAddingResult";
+	}
+	
+	public String addExistingSong() {
+		
+		Song song = disco.getSong(this.existingSong.getName());
+		Album album = disco.getAlbum(this.album.getName(), this.artist);
+		album.setDuration(album.getDuration()+song.getDuration());
+		song.addAlbum(album);
+		
+		disco.addSongToAlbum(song, album);
+		
+		albumList();
+		
+		clearInputs();
+		
+		this.addingResult = "Existing Song";
 		
 		return "showAddingResult";
 	}
@@ -408,6 +447,19 @@ public class DiscographyManagedBean {
 	public void setNewArtistLastname(String newArtistLastname) {
 		this.newArtistLastname = newArtistLastname;
 	}
+
+	public List<String> getExistingSongNames() {
+		return existingSongNames;
+	}
+
+	public Song getExistingSong() {
+		return existingSong;
+	}
+
+	public void setExistingSong(Song existingSong) {
+		this.existingSong = existingSong;
+	}
+	
 	
 	
 	

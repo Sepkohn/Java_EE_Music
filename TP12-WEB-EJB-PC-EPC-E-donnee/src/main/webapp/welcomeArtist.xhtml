@@ -49,14 +49,14 @@
 					<f:selectItem itemValue="Singer" itemLabel="Singer"/>
 					<f:selectItem itemValue="Band" itemLabel="Band" />
 		        </h:selectOneRadio>		
-				<c:if test = "#{DiscographyManagedBean.artistType == 'Singer'}" >
+				<h:panelGroup rendered="#{DiscographyManagedBean.artistType == 'Singer'}" >
 						<h:outputText value="Firstname "></h:outputText>
 				        <h:inputText name="Firstname" value="#{DiscographyManagedBean.newArtistFirstname}" required="true"/>
 				        <br />
 				        <h:outputText value="Lastname"></h:outputText>
 				        <h:inputText name="Lastname" value="#{DiscographyManagedBean.newArtistLastname}" required="true"/>
 				        <br />
-			        </c:if>
+			      </h:panelGroup> 
 				 <h:commandButton value="Add Artist" action="#{DiscographyManagedBean.addArtist}"></h:commandButton>
         </h:form>
     </ui:define>

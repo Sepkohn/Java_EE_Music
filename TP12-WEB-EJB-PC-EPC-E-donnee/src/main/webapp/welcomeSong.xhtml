@@ -47,9 +47,21 @@
 				value="#{DiscographyManagedBean.duration}" required="true"/>
 			<br />	
 			<h:commandButton value="Add Song"
-				action="#{DiscographyManagedBean.addSong}"></h:commandButton>
-			
+				action="#{DiscographyManagedBean.addSong}"/>
 		</h:form>
-    </ui:define>
+    
+	     <h:form>
+	        	<h:outputLabel value="Add an existing song:"></h:outputLabel>
+	        	<br></br>
+	        	<h:panelGrid columns="5">
+	        		<h:outputText value="Select a Song: "></h:outputText>
+		        	<h:selectOneMenu value="#{DiscographyManagedBean.existingSong.name}" valueChangeListener="#{DiscographyManagedBean.updateExistingSong}" onchange="submit()">
+		        		<f:selectItems value="#{DiscographyManagedBean.existingSongNames}"/>
+		        	</h:selectOneMenu>
+	        	</h:panelGrid>
+	        	<h:commandButton value="Add Song"
+					action="#{DiscographyManagedBean.addExistingSong}"/>
+		</h:form>
+	</ui:define>
 </ui:composition>
 </html>

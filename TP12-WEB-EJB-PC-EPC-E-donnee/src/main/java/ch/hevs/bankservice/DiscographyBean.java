@@ -38,31 +38,37 @@ public class DiscographyBean implements Discography{
 	
 	
 	@Override
-	public List<Album> getAlbums(String artistName) {
-		return (List<Album>)em.createQuery("SELECT al FROM Album al, Artist a WHERE al.artist.id = a.id AND a.stageName=:artistName").setParameter("artistName", artistName).getResultList();
+	public List<Album> getAlbums(Artist artist) {
+		return (List<Album>)em.createQuery("FROM Album WHERE artist.id =:id").setParameter("id", artist.getId()).getResultList();
 	}
 
 	@Override
-	public Album getAlbum(String albumName, String artistName) {
-		Query query = em.createQuery("SELECT a FROM Album a, Artist ar where a.name=:albumName AND ar.stageName=:artistName AND a.artist.id = ar.id");
+	public Album getAlbum(String albumName, Artist artist) {
+		Query query = em.createQuery("SELECT a FROM Album a, Artist ar where a.name=:albumName AND a.artist.id =:id");
 		query.setParameter("albumName", albumName);
-		query.setParameter("artistName", artistName);
+		query.setParameter("id", artist.getId());
 		return (Album) query.getSingleResult();
 	}
 
 	@Override
-	public List<Song> getSongsFromAlbum(String albumName, String artistName) {
-		Query query = em.createQuery("SELECT s FROM Artist ar, Album a, IN(a.songs) s where a.name=:albumName AND ar.stageName=:artistName AND a.artist.id = ar.id");
-		query.setParameter("albumName", albumName);
-		query.setParameter("artistName", artistName);
+	public List<Song> getSongsFromAlbum(Album album, Artist artist) {
+		Query query = em.createQuery("SELECT s FROM Artist ar, IN(ar.albums) a, IN(a.songs) s where a.id=:albumId AND a.artist.id =:artistId");
+		query.setParameter("albumId", album.getId());
+		query.setParameter("artistId", artist.getId());
 		return (List<Song>) query.getResultList();
 	}
 
 	@Override
-	public Song getSong(String songName, String albumName) {
-		Query query = em.createQuery("SELECT s FROM Song s, Album a, IN(s.albums) al where s.name =:songName AND a.name =:albumName AND al.id = a.id");
+	public Song getSong(String songName, Album album) {
+		Query query = em.createQuery("SELECT s FROM Song s, Album a, IN(s.albums) al where s.name =:songName AND al.id =:id");
 		query.setParameter("songName", songName);
-		query.setParameter("albumName", albumName);
+		query.setParameter("id", album.getId());
+		return (Song) query.getSingleResult();
+	}
+	
+	public Song getSong(String songName) {
+		Query query = em.createQuery("SELECT DISTINCT s FROM Song s where s.name =:songName");
+		query.setParameter("songName", songName);
 		return (Song) query.getSingleResult();
 	}
 
@@ -118,6 +124,14 @@ public class DiscographyBean implements Discography{
 		query.setParameter("album_id", album.getId());
 		query.executeUpdate();
 	
+	}
+
+	@Override
+	public List<Song> getSongsFromArtist(Artist artist, Album album) {
+		Query query = em.createQuery("SELECT DISTINCT s FROM Artist a, IN(a.albums) al, IN(al.songs) s WHERE a.id =:artistId AND al.id !=:albumId");
+		query.setParameter("artistId", artist.getId());
+		query.setParameter("albumId", album.getId());
+		return (List<Song>) query.getResultList();
 	}
 
 

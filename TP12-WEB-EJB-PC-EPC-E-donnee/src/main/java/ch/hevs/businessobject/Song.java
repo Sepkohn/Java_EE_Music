@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Inheritance;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
@@ -12,7 +13,7 @@ import javax.persistence.OneToMany;
 @Inheritance
 public class Song extends Music{
 	
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
 	private List<Album> albums;
 
 	public List<Album> getAlbums() {

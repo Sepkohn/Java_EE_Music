@@ -15,10 +15,10 @@
 		<br/>
 		<h:outputLabel value="Studio : #{DiscographyManagedBean.artist.address.street}, #{DiscographyManagedBean.artist.address.postalCode} #{DiscographyManagedBean.artist.address.city}"></h:outputLabel>
 		<br/>
-		<c:if test="#{DiscographyManagedBean.isSinger}">
+		<h:panelGroup rendered="#{DiscographyManagedBean.isSinger}">
 			<h:outputLabel value="Real name : #{DiscographyManagedBean.artist.realFirstname} #{DiscographyManagedBean.artist.realName}"></h:outputLabel>
 			<br/>
-		</c:if>
+		</h:panelGroup>
 		<br/>
 		<h:outputLabel value="This artist has #{DiscographyManagedBean.numberOfSongs} songs"></h:outputLabel>
 		<br/><br/>
@@ -36,11 +36,11 @@
 			<h:commandButton value="Delete Album" action="#{DiscographyManagedBean.deleteAlbum}"></h:commandButton>
 		</h:form>
 		<h:form>
-			<c:if test="#{DiscographyManagedBean.albumlength}">
+			<h:panelGroup rendered="#{DiscographyManagedBean.albumlength}">
 				<h:commandLink action="welcomeSong">
 					<h:outputText value="Show Songs" />
 				</h:commandLink>
-			</c:if>
+			</h:panelGroup>
 		</h:form>
 		<br /><br />
 

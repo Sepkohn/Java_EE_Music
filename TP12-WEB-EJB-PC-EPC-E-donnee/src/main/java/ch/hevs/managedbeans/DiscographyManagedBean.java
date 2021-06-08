@@ -71,7 +71,7 @@ public class DiscographyManagedBean {
 	    	InitialContext ctx = new InitialContext();
 			disco = (Discography) ctx.lookup("java:global/TP12-WEB-EJB-PC-EPC-E-0.0.1-SNAPSHOT/DiscographyBean!ch.hevs.Discoservice.Discography");    	
 			
-			//variavbles initaîalization
+			//variables initialization
 			clearInputs();
 			
 			// get clients

@@ -9,8 +9,10 @@
 
 <ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
     <ui:define name="content">
+    
         <h:outputLabel value="Welcome to the Music Discography"/>
         <br></br>
+        <h3><h:outputText value="Discographie : "/></h3>
         <h:form>
         	<h:outputLabel value="Music Information:"/>
         	<br></br>
@@ -20,45 +22,49 @@
 	        		<f:selectItems value="#{DiscographyManagedBean.artistNames}"/>
 	        	</h:selectOneMenu>
         	</h:panelGrid>
+        	<br />
        </h:form>
           <h:form>
           <h:panelGroup rendered="#{DiscographyManagedBean.artistLength}">
-		        <h:commandButton value="Show Albums" action="welcomeAlbum" ></h:commandButton>
+		        <h:commandButton value="Show Albums" action="welcomeAlbum" ></h:commandButton><h:outputText value="&#160;" />
 		         <h:commandButton value="Delete Artist" action="#{DiscographyManagedBean.deleteArtist}"></h:commandButton>
         </h:panelGroup>
         </h:form>
         <br /><br />
+        <h3><h:outputText value="Form to add an Artist : "/></h3>
           <h:form>
-		        <h:outputText value="stageName"/>
+		        <h:outputText value="StageName : "/>
 		        <h:inputText name="stageName" value="#{DiscographyManagedBean.newArtistName}" required="true"/>
 		        <br />
 		        
-		        <h:outputText value="genre"/>
+		        <h:outputText value="genre : "/>
 		        <h:inputText name="genre" value="#{DiscographyManagedBean.newGenre}" required="true"/>
 		         <br />
 		         
-		         <h:outputText value="Street"/>
+		         <h:outputText value="Street : "/>
 		        <h:inputText name="Street" value="#{DiscographyManagedBean.address.street}"/>
 		        <br />
-		        <h:outputText value="Postal Code "/>
+		        <h:outputText value="Postal Code : "/>
 		        <h:inputText name="PostalCode" value="#{DiscographyManagedBean.address.postalCode}"/>
 		        <br />
-		        <h:outputText value="City"/>
+		        <h:outputText value="City : "/>
 		        <h:inputText name="City" value="#{DiscographyManagedBean.address.city}"/>
-		        <br />
+		        <br /><br />
 		        
 		        <h:selectOneRadio value="#{DiscographyManagedBean.artistType}" required="true" onchange="submit()" valueChangeListener="#{DiscographyManagedBean.typeChange}">
 					<f:selectItem itemValue="Singer" itemLabel="Singer"/>
 					<f:selectItem itemValue="Band" itemLabel="Band" />
-		        </h:selectOneRadio>		
+		        </h:selectOneRadio>	
+		        <br />	
 				<h:panelGroup rendered="#{DiscographyManagedBean.artistType == 'Singer'}" >
-						<h:outputText value="Firstname "/>
+						<h:outputText value="Firstname : "/>
 				        <h:inputText name="Firstname" value="#{DiscographyManagedBean.newArtistFirstname}" required="true"/>
 				        <br />
-				        <h:outputText value="Lastname"/>
+				        <h:outputText value="Lastname : "/>
 				        <h:inputText name="Lastname" value="#{DiscographyManagedBean.newArtistLastname}" required="true"/>
 				        <br />
 			      </h:panelGroup> 
+			      <br />
 				 <h:commandButton value="Add Artist" action="#{DiscographyManagedBean.addArtist}"/>
         </h:form>
     </ui:define>

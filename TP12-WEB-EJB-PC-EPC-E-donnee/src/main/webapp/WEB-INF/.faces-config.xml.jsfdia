@@ -7,9 +7,9 @@
    <PROCESS-ITEM-OUTPUT ID="welcomeAlbum::#welcomeAlbum.xhtml"
     NAME="output" PATH="/welcomeAlbum.xhtml"
     TARGET="rules:#welcomeAlbum.xhtml" TITLE="welcomeAlbum" model-entity="JSFProcessItemOutput"/>
-   <PROCESS-ITEM-OUTPUT ID="showAddingResult::#showAddingResult.xhtml"
-    NAME="output1" PATH="/showAddingResult.xhtml"
-    TARGET="rules:#showAddingResult.xhtml" TITLE="showAddingResult" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="showResult::#showResult.xhtml"
+    NAME="output1" PATH="/showResult.xhtml"
+    TARGET="rules:#showResult.xhtml" TITLE="showResult" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
  </PROCESS-ITEM>
  <PROCESS-ITEM NAME="rules:#welcomeAlbum.xhtml"
@@ -19,21 +19,26 @@
    <PROCESS-ITEM-OUTPUT ID="welcomeSong::#welcomeSong.xhtml"
     NAME="output" PATH="/welcomeSong.xhtml"
     TARGET="rules:#welcomeSong.xhtml" TITLE="welcomeSong" model-entity="JSFProcessItemOutput"/>
-   <PROCESS-ITEM-OUTPUT ID="showAddingResult::#showAddingResult.xhtml"
-    NAME="output1" PATH="/showAddingResult.xhtml"
-    TARGET="rules:#showAddingResult.xhtml" TITLE="showAddingResult" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="showResult::#showResult.xhtml"
+    NAME="output1" PATH="/showResult.xhtml"
+    TARGET="rules:#showResult.xhtml" TITLE="showResult" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
  </PROCESS-ITEM>
  <PROCESS-ITEM NAME="rules:#welcomeSong.xhtml" PATH="/welcomeSong.xhtml"
-  SHAPE="448,241,0,0" model-entity="JSFProcessGroup">
+  SHAPE="440,360,50,57" model-entity="JSFProcessGroup">
   <PROCESS-ITEM ID="rules:#welcomeSong.xhtml:0" NAME="item"
    PATH="/welcomeSong.xhtml" model-entity="JSFProcessItem">
-   <PROCESS-ITEM-OUTPUT ID="showAddingResult::#showAddingResult.xhtml"
-    NAME="output" PATH="/showAddingResult.xhtml"
-    TARGET="rules:#showAddingResult.xhtml" TITLE="showAddingResult" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="showResult::#showResult.xhtml" NAME="output"
+    PATH="/showResult.xhtml" TARGET="rules:#showResult.xhtml"
+    TITLE="showResult" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="showsongDetail::#showsongDetail.xhtml"
+    NAME="output1" PATH="/showsongDetail.xhtml"
+    TARGET="rules:#showsongDetail.xhtml" TITLE="showsongDetail" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
  </PROCESS-ITEM>
- <PROCESS-ITEM NAME="rules:#showAddingResult.xhtml"
-  PATH="/showAddingResult.xhtml" SHAPE="480,424,50,25"
+ <PROCESS-ITEM NAME="rules:#showResult.xhtml" PATH="/showResult.xhtml"
+  SHAPE="216,528,50,25" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#showsongDetail.xhtml"
+  PATH="/showsongDetail.xhtml" SHAPE="612,209,0,0"
   model-entity="JSFProcessGroup" persistent="true"/>
 </PROCESS>

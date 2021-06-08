@@ -9,7 +9,7 @@ import javax.faces.event.ValueChangeEvent;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
-import ch.hevs.bankservice.Discography;
+import ch.hevs.Discoservice.Discography;
 import ch.hevs.businessobject.Address;
 import ch.hevs.businessobject.Album;
 import ch.hevs.businessobject.Artist;
@@ -69,7 +69,7 @@ public class DiscographyManagedBean {
 	    	
 	    	// use JNDI to inject reference
 	    	InitialContext ctx = new InitialContext();
-			disco = (Discography) ctx.lookup("java:global/TP12-WEB-EJB-PC-EPC-E-0.0.1-SNAPSHOT/DiscographyBean!ch.hevs.bankservice.Discography");    	
+			disco = (Discography) ctx.lookup("java:global/TP12-WEB-EJB-PC-EPC-E-0.0.1-SNAPSHOT/DiscographyBean!ch.hevs.Discoservice.Discography");    	
 			
 			//variavbles initaîalization
 			clearInputs();

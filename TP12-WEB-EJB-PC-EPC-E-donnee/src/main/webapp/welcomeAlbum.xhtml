@@ -9,56 +9,73 @@
 
 <ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
 	<ui:define name="content">
-		<h1><h:outputLabel value="#{DiscographyManagedBean.artist.stageName} "/></h1>
-		<br/>
-		<h:outputLabel value="Genre : #{DiscographyManagedBean.artist.genre}"/>
-		<br/>
-		<h:outputLabel value="Studio : #{DiscographyManagedBean.artist.address.street}, #{DiscographyManagedBean.artist.address.postalCode} #{DiscographyManagedBean.artist.address.city}"/>
-		<br/>
+		<h3>
+			<h:outputLabel value="#{DiscographyManagedBean.artist.stageName} " />
+		</h3>
+		<h:outputLabel value="Genre : #{DiscographyManagedBean.artist.genre}" />
+		<br />
+		<h:outputLabel
+			value="Studio : #{DiscographyManagedBean.artist.address.street}, #{DiscographyManagedBean.artist.address.postalCode} #{DiscographyManagedBean.artist.address.city}" />
+		<br />
 		<h:panelGroup rendered="#{DiscographyManagedBean.isSinger}">
-			<h:outputLabel value="Real name : #{DiscographyManagedBean.artist.realFirstname} #{DiscographyManagedBean.artist.realName}"/>
-			<br/>
+			<h:outputLabel
+				value="Real name : #{DiscographyManagedBean.artist.realFirstname} #{DiscographyManagedBean.artist.realName}" />
+			<br />
 		</h:panelGroup>
-		<br/>
-		<h:outputLabel value="This artist has #{DiscographyManagedBean.numberOfSongs} songs"/>
-		<br/><br/>
+		<br />
+		<h:outputLabel
+			value="This artist has #{DiscographyManagedBean.numberOfSongs} songs" />
+		<br />
+		<br />
 		<h:form>
-			<h:outputLabel value="Music Information:"/>
+			<h:outputLabel value="Music Information:" />
 			<br></br>
 			<h:panelGrid columns="5">
-				<h:outputText value="Select an Album: "/>
+				<h:outputText value="Select an Album: " />
 				<h:selectOneMenu value="#{DiscographyManagedBean.album.name}"
 					valueChangeListener="#{DiscographyManagedBean.updateSourceAlbum}"
 					onchange="submit()">
 					<f:selectItems value="#{DiscographyManagedBean.albumNames}" />
 				</h:selectOneMenu>
 			</h:panelGrid>
-			
 		</h:form>
+		<br />
 		<h:form>
 			<h:panelGroup rendered="#{DiscographyManagedBean.albumlength}">
-				<h:commandButton action="welcomeSong" value="ShowSongs" />
-				<h:commandButton value="Delete Album" action="#{DiscographyManagedBean.deleteAlbum}"/>
+				<h:commandButton action="welcomeSong" value="showsongDetail" />
+				<h:outputText value="&#160;" />
+				<h:commandButton value="Delete Album"
+					action="#{DiscographyManagedBean.deleteAlbum}" />
 			</h:panelGroup>
 		</h:form>
-		<br /><br />
+		<br />
+		<br />
 
+		<h3>
+			<h:outputText value="Form to add an Album : " />
+		</h3>
 		<h:form>
-			<h:outputText value="Album Name"/>
+			<h:outputText value="Album Name: " />
 			<h:inputText name="albumName"
-				value="#{DiscographyManagedBean.nameMusic}" required="true"/>
+				value="#{DiscographyManagedBean.nameMusic}" required="true" />
 			<br />
-			<h:outputText value="year"/>
-			<h:inputText name="year"
-				value="#{DiscographyManagedBean.year}" required="true"/>
+			<h:outputText value="year: " />
+			<h:inputText name="year" value="#{DiscographyManagedBean.year}"
+				required="true" />
 			<br />
-			<h:outputText value="label"/>
-			<h:inputText name="label"
-				value="#{DiscographyManagedBean.label}" required="true"/>
+			<h:outputText value="label: " />
+			<h:inputText name="label" value="#{DiscographyManagedBean.label}"
+				required="true" />
 			<br />
-			
+			<br />
 			<h:commandButton value="Add Album"
-				action="#{DiscographyManagedBean.addAlbum}"/>
+				action="#{DiscographyManagedBean.addAlbum}" />
+		</h:form>
+		<br />
+		<h:form>
+			<h:commandLink action="welcomeArtist">
+				<h:outputText value="Back to Artist" />
+			</h:commandLink>
 		</h:form>
 
 

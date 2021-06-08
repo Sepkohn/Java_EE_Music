@@ -8,13 +8,17 @@
 
 <ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
     <ui:define name="content">
-        <h1><h:outputLabel value="#{DiscographyManagedBean.song.name}"/></h1>
-        <br/>
+        <h3><h:outputLabel value="#{DiscographyManagedBean.song.name}"/></h3>
 		<h:outputLabel value="Duration : #{DiscographyManagedBean.song.duration} minutes"/>
 		<br/>
 		<h:outputLabel value="Year : #{DiscographyManagedBean.song.year}"/>
 		<br/>
-		<br/>
+		<br />
+		<h:form>
+        <h:commandLink action="welcomeArtist">
+         <h:outputText value="Back to Artist" />
+        </h:commandLink>
+        </h:form>
     </ui:define>
 </ui:composition>
 </html>

@@ -4,13 +4,13 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class Address {
 	
-	private String postalCode;
+	private int postalCode;
 	private String street;
 	private String city;
 
 
 
-	public String getPostalCode() {
+	public int getPostalCode() {
 		return postalCode;
 	}
 	public String getStreet() {
@@ -19,7 +19,7 @@ public class Address {
 	public String getCity() {
 		return city;
 	}
-	public void setPostalCode(String postalCode) {
+	public void setPostalCode(int postalCode) {
 		this.postalCode = postalCode;
 	}
 	public void setStreet(String street) {
@@ -31,7 +31,7 @@ public class Address {
 	// constructors
 	public Address() {
 	}
-	public Address(String postalCode, String street, String city) {
+	public Address(int postalCode, String street, String city) {
 	this.postalCode = postalCode;
 	this.street = street;
 	this.city = city;
